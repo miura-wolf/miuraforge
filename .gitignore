@@ -58,3 +58,11 @@ node_modules/
 *.mp4
 *.webm
 *.avi
+
+# Large media directories (too heavy for GitHub)
+Videos/
+Libro/
+supertonic/
+
+# Docs Word files
+*.docx
