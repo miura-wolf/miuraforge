@@ -22,6 +22,7 @@ class Database:
     investigacion: Optional[Worksheet]
     clusters: Optional[Worksheet]
     frases: Optional[Worksheet]
+    blog_contenido: Optional[Worksheet]
 
     def __init__(self, spreadsheet_name="BD_MiuraForge_Engine"):
         # Configuración de acceso
@@ -49,6 +50,7 @@ class Database:
             self.investigacion = all_worksheets.get("INVESTIGACION_PSICOLOGICA")
             self.clusters = all_worksheets.get("CLUSTERS_DOLOR")
             self.frases = all_worksheets.get("FRASES_VIRALES")
+            self.blog_contenido = all_worksheets.get("BLOG_CONTENIDO")
 
             # Inicializar Cache para velocidad (Columna 1 = URL en FUENTES)
             if self.fuentes:
@@ -156,6 +158,22 @@ class Database:
                 "plataforma",
                 "tema",
             ],
+            "BLOG_CONTENIDO": [
+                "ID",
+                "Estado",
+                "Título",
+                "Slug",
+                "Fecha",
+                "Descripción",
+                "Keywords",
+                "Categoría",
+                "Imagen_URL",
+                "Enlace_Afiliado",
+                "Cuerpo_Raw",
+                "Tags",
+                "ReadTime_Min",
+                "Featured"
+            ],
         }
 
         # Obtenemos lista real de títulos para evitar duplicados
@@ -185,6 +203,7 @@ class Database:
                         "ARSENAL_GANCHOS": "ganchos",
                         "CLUSTERS_DOLOR": "clusters",
                         "FRASES_VIRALES": "frases",
+                        "BLOG_CONTENIDO": "blog_contenido",
                     }
                     if nombre_upper in attr_map:
                         setattr(self, attr_map[nombre_upper], ws)

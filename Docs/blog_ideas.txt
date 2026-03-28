@@ -1,0 +1,104 @@
+Sobre la idea del blog con reseñas y afiliados
+La katana dice: sí, y es más inteligente de lo que parece a primera vista.
+Por qué funciona estratégicamente
+No es solo monetización pasiva. Es un embudo doctrinal de tres etapas:
+El hombre busca "Ragnarok Hombres Peligrosos reseña" en Google. Llega al blog. Lee tu análisis — que no destruye el libro, sino que lo ubica honestamente. Al final del artículo encuentra la frase que ya formulamos: "Si Ragnarok es el mapa, El Hombre que Dejó de Mentirse es el primer paso." Hace clic en el afiliado de Amazon para Ragnarok — tú cobras. Y se queda con el anzuelo hacia tu libro.
+Ganas en los dos extremos del embudo: comisión del libro ajeno y conversión hacia el tuyo.
+Los libros que deberías reseñar primero
+Los que tu audiencia ya está leyendo o buscando, ordenados por volumen de búsqueda probable en español:
+El Hombre Más Rico de Babilonia, El Camino del Hombre Superior, Memento Mori, No me hagas pensar, Los 48 Poderes, Atomic Habits en español, El Estoico. Cada uno con el mismo esquema: qué hace bien, dónde deja el vacío, qué viene después.
+La estructura de cada reseña
+Cada artículo debería tener el mismo esquema doctrinal que un Short — tres fases escritas:
+Revelar: qué promete el libro y qué entrega realmente. Diagnosticar: el vacío específico que deja en el lector. Ordenar: qué hacer con ese vacío — y ahí vive el enlace a tu libro o a la descarga de fundamento.html.
+Lo que necesitas antes de arrancar
+Un plugin de afiliados de Amazon para Netlify o un bloque simple de HTML con los enlaces de Amazon Associates. El programa de Amazon Associates en español acepta tráfico latinoamericano. Con disciplinaenacero.com ya verificado y con tráfico del canal, la aprobación es directa.
+Un número concreto
+Amazon Associates paga entre 3% y 4.5% en libros. Ragnarok en Amazon ronda los $12-15 USD. Si el artículo genera 100 clics mensuales con 8% de conversión — número conservador para tráfico cualificado — son 8 ventas por mes, aproximadamente $4-5 USD. Multiplicado por 10 reseñas activas y tráfico creciente del canal, el número se vuelve interesante sin ser el foco principal.
+El foco principal es lo que ya dijiste: el lector que compra Ragnarok y siente el vacío. Ese lector llega a tu libro con la pregunta ya formulada. Tú solo tienes que estar ahí con la respuesta.
+
+
+
+
+Lista de 50 libros para reseñar en disciplinaenacero.com, organizados por categoría doctrinal. Cada uno tiene un vacío explotable hacia tu libro.
+
+BLOQUE 1 — Desarrollo Masculino y Autoconocimiento
+(El mercado más directo — lectores ya en el nicho)
+
+Ragnarok: El Camino de un Hombre — Hombres Peligrosos
+Memento Mori — Hombres Peligrosos
+El Camino del Hombre Superior — David Deida
+El Arte de Ser Hombre — Víctor Küppers
+El Varón Castrado — Esther Vilar
+Hombre sin Miedo — Robert Glover
+No More Mr. Nice Guy — Robert Glover (versión español)
+The Way of Men — Jack Donovan (tiene versión española)
+Iron John — Robert Bly
+King, Warrior, Magician, Lover — Moore & Gillette
+
+
+BLOQUE 2 — Disciplina, Hábitos y Productividad
+(Altísimo volumen de búsqueda — fácil posicionamiento SEO)
+
+Atomic Habits — James Clear
+El Poder de los Hábitos — Charles Duhigg
+Can't Hurt Me — David Goggins
+Nunca te Rindas — David Goggins (versión española)
+Extreme Ownership — Jocko Willink
+Discipline Equals Freedom — Jocko Willink
+Las 5 AM — Robin Sharma
+El Club de las 5 de la Mañana — Robin Sharma
+Deep Work — Cal Newport
+Trabaja Profundo — Cal Newport (versión española)
+
+
+BLOQUE 3 — Filosofía Estoica y Mentalidad
+(Audiencia hispanohablante en crecimiento exponencial)
+
+Meditaciones — Marco Aurelio
+Cartas a Lucilio — Séneca
+Sobre la Brevedad de la Vida — Séneca
+El Manual de Epicteto — Epicteto
+El Obstáculo es el Camino — Ryan Holiday
+Ego es el Enemigo — Ryan Holiday
+Stillness is the Key — Ryan Holiday
+El Diario del Estoico — Ryan Holiday
+Memorias de un Estoico Moderno — Massimo Pigliucci
+Cómo ser un Estoico — Massimo Pigliucci
+
+
+BLOQUE 4 — Dinero, Poder y Ambición
+(El hombre que ya trabaja en sí mismo busca resultados externos)
+
+El Hombre Más Rico de Babilonia — George Clason
+Padre Rico Padre Pobre — Robert Kiyosaki
+Los 48 Poderes — Robert Greene
+Las 33 Estrategias de la Guerra — Robert Greene
+La Ley 50 — Robert Greene y 50 Cent
+Mastery — Robert Greene
+Piense y Hágase Rico — Napoleon Hill
+El Alquimista — Paulo Coelho (vacío explotable enorme)
+La Semana Laboral de 4 Horas — Tim Ferriss
+Herramientas de Titanes — Tim Ferriss
+
+
+BLOQUE 5 — Psicología, Identidad y Autoengaño
+(El territorio más cercano a tu libro — conversión más alta)
+
+El Hombre en Busca de Sentido — Viktor Frankl
+Mans Search for Meaning (para audiencia bilingüe)
+Los Juegos que Juega la Gente — Eric Berne
+Tus Zonas Erróneas — Wayne Dyer
+El Sutil Arte de que Todo le Importe un C*o** — Mark Manson
+Modelos — Mark Manson
+The Rational Male — Rollo Tomassi
+Psycho-Cybernetics — Maxwell Maltz
+El Mito de Sísifo — Albert Camus
+El Coraje de Ser Feliz — Ichiro Kishimi (basado en Adler)
+
+
+Orden de ataque recomendado
+Empieza por los de mayor volumen de búsqueda en español y vacío más explotable hacia tu libro:
+Prioridad 1 — Atomic Habits, Can't Hurt Me, El Sutil Arte, Padre Rico, El Hombre en Busca de Sentido. Estos cinco solos generan tráfico suficiente para justificar el blog desde el mes uno.
+Prioridad 2 — Todo el bloque de Greene y el bloque estoico. Audiencia cultivada, compradores activos en Amazon.
+Prioridad 3 — El bloque masculino específico. Menor volumen pero conversión altísima hacia tu libro — son los lectores más calificados.
+Cuando arranques el blog te estructuro el esquema SEO por artículo y las palabras clave exactas para cada reseña. 
