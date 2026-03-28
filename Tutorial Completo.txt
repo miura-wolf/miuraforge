@@ -1,0 +1,351 @@
+Abuela, salió video de Gentleman. Buenas,
+gente hermosa, mi corazón. Hello, hello, hello, hello. Bienvenidos a otro video de Gentleman
+You programa. En el día de hoy vamos a estar viendo una cosa que es una cosa de locos. Bien,
+así no más se los estoy diciendo. Si ustedes me están siguiendo los videos, vieron que estoy
+haciendo herramientas de día y cosas por ahí, pero una cosa que me preguntan demasiado es,
+¿cómo instalo todo esto? Y yo te voy a explicar eso y no solamente eso, sino también te voy a
+decir cómo involucrarte dentro del mundo de la guía de la forma más rápida posible. Y una cosa
+más, voy a agarrarte con esto a hacer magia, ya vas a ver. Vamos a empezar con un poquitito
+de teoría. Claro que sí. Bienvenidos a Gentleman AI Ecosystem o también Gentle AI Stack. Todo esto
+que les voy a pasar el día de hoy está todo puesto directamente en mis repositorios. Estos son open
+source, cualquiera puede ir utilizarlo sin ningún tipo de coste alguno y obviamente voy a tener los
+links en la descripción. Entonces vamos a empezar. ¿Cuál es la idea de todo esto? Prácticamente este
+es rayadito que está acá. Un comando, cualquier agente, cualquier sistema operativo. Esto ahora
+mismo tiene soporte a Windows, a varias versiones de Linux, a OSX. y contigo Windows, no es Windows
+WSL, no, no es Windows Nativo, gente. Entonces soporte también a atentos con esto. Gemini,
+Cloud Code, Open Code, Codex, Cursor y Visual Studio Code. Y si querés tener alguna otra cosita,
+como por ejemplo Antigravity, que químic y demás, hermano, levantate un PR que para eso estamos. Sí.
+Entonces vamos a continuar. ¿Cuál es la idea de todo esto? prácticamente quiero hacer un agente
+de IA que no tenga que ser configurado. Quiero que ustedes hagan ti y ya tengan todo, que todo
+funcione, todo eh todo funcione sin ningún tipo de problema y todo de una. No tienen que andar
+configurando nada. Esto es un stack que funciona, que tenés una empresa, tenés una organización
+y querés algo que funcione para dentro de tu equipo y no tengan que andar tuneando cosas. Acá
+lo tenés. Para eso estoy yo, papá. Yo te tuneo. Te Entonces ahí viene el tema. ¿Qué es lo que pasa?
+El 90% de los desarrolladores no utilizan todo lo que se puede hacer, bien, todo el potencial
+posible. Entonces, ¿qué pasa? Cada vez que inician una sesión no tiene memoria, siempre empieza de
+cero, no tiene ningún tipo de skills, es todo por defecto. No tienen un workflow, es preguntarle
+cosas a un chat. Sí está bien que ahora el chat pasa a ser un agente porque tiene tools,
+tiene herramientas, como por ejemplo, edición, lectura de archivos y demás, pero no tienen un
+workflow aparente y después no tienen ningún tipo de coordinación. Sobre todo esta es la parte
+que más jode. Entonces vamos a seguir viendo. Entonces la idea acá es que no vamos a instalar
+agentes nuevos, no queremos hacer cosas raras, sino que lo que queremos hacer es directamente
+potenciar lo que ustedes ya tienen. ¿Okay? El único que se instala agentes es para Open Code,
+pero ya van a ver por qué. Entonces, ¿cuál es el tema? Yo he creado diferentes herramientas. La
+primera de todas es engram, es un cerebro virtual. Todo lo que vos vas haciendo con la vas chateando.
+¿Qué hace, papá? Bien, todo ese chat que vos tenés directamente la IA lo aprende. ¿Qué aprende? Ese
+es el tema. Aprende cualquier tipo de conversación que tengas en cuanto a toma de decisiones, que
+hubo un Bag, ¿okay? ¿Dónde estuvo el BG? ¿Cómo se arregló? ¿Qué aprendimos de esto? Bien. ¿Para
+qué? Para que el día de mañana pase exactamente lo mismo, ya sabe un problema que similar a ese
+cómo lo solucionaron. Después toma una decisión de arquitectura, también se guarda, etcétera. Luego
+tenemos SDD. Como ya sabrán, existe OpenSpect.dde, EP, que es una página espectacular, que si no
+se lo dejo también en la descripción para que lo vean, que es una forma de trabajo. Ahora lo
+vamos a ver ahí en ejemplo aparente, pero en sí tiene diferentes fases. Cada fase es un proceso
+de trabajo. Esto no es nuevo, esto es desarrollo basado en las especificaciones y de vuelta esto
+lo hace solo. Se los doy para que lo haga todo la IA solo. Ustedes no tengan que meterse en nada.
+Después skills, también tenemos skills que ya están dentro del repositorio para que ustedes lo
+puedan aplicar y ustedes también puedan fomentarlo e incrementarlo. Después también tenemos el tema
+de Open Spec, bien, que es justamente lo que les decía, está basado el tema del desarrollo en
+openspec.de para la creación de archivos para trabajo seguido por especificaciones. Después
+tenemos integraciones con MSP. También podemos tener, como en este caso, ¿no? Yo recomiendo tener
+Contex 7. Después pueden meter cosas como Notion. Shira. Bien, entonces esto es mucho más fácil de
+seguir, tener documentaciones y demás. Y después, obviamente, también les instala una persona.
+Esto lo pueden configurar de vuelta que hable como yo o no, si no quieren no pasa nada. Pero la
+idea principal acá es que van a tener un agente que no solamente les responda, sino que también
+les enseñe. Está hecho para eso. Si yo le digo, "Quiero crear un componente en React", dice,
+"No, no, no. ¿Para qué? ¿Dónde queres crearlo? ¿Qué querés hacer? ¿Por qué lo queres hacer?" y te
+va a ir guiando. Eso es lo que necesitamos. Bien, sos una persona junior que recién entra en todo
+este temilla. Ya tenés acá instala esto y esta es la mejor forma de aprender. Sí, no dejes que la
+haga todo. Hay un human in the loop vos. Entonces, vamos a hablar un poquitito. Tenemos también el
+tema de lo que es ahorro de energía. Bien, es la economía de los tokens. Como ustedes ya sabrán,
+nosotros tenemos lo que es la ventana de contexto. ¿Cuánto eh más vamos metiendo dentro de la gente
+en cuanto a chat, en cuanto a archivos que va leyendo, editando y demás? generamos qué una un
+espacio, ¿no? Dentro de esa ventana de contexto. El problema es que eso se llena y cuando se llena
+existe lo que es la compactación. Hace, ¿qué es la compactación? Prácticamente hace un resumen de
+todo lo que se viene hablando, se crea una sesión nueva y se lo pasa. Problema de esto, ¿cuál es? En
+esa compactación perdemos cosas. Entonces, no. Lo que yo hice es directamente tener un orquestrador
+principal que delega todo. Ya lo vamos a ver, eh, pero delega todo y gente entre 50 a 70% de ahorro.
+¿Cómo lo sé? Porque hice muchísimas pruebas. dentro del repositorio también hay un documento
+con todas las pruebas que se hicieron y cómo ahorra todo esto. Bien, sigamos. Acá tenemos el
+tema del openspact.dev, que es lo que les decía, es una especificación ya legible por la IA. Una
+de las cosas que nosotros queremos es que no haya ningún tipo de ambigüedad, que todo esto se
+pueda versionar, que sea reanudable. Si yo me voy y viene otra persona, ya se sabe cómo esto está
+trabajando y también que sea eficiente en tokens. Eh, vamos vamos a ver que esto va trabajando,
+va leyendo especificaciones, tiene diferentes tareas para realizar. Después se hace una etapa de
+validación donde se comprueba todo lo que se está entregando que cumpla con las especificaciones
+del principio y se va iterando hasta que da el resultado aparente. Bien, entonces como esto es
+muy estructurado tanto como input como output, bien, mejor código, tiene menor cantidad de
+alucinaciones y menos ciclos de corrección. En resumen, menos uso de tokens también.
+Claro, gastamos más tokens para hacer toda esta estructura, pero lo ahorramos en el tema
+de no tantos errores al finalizar. También esto viene con el tema de la delegación, porque
+cada vez que nosotros delegamos en un subagente la implementación de algo, lo que estamos
+haciendo realmente, ¿saben qué? Es empezar en una página en blanco y eso para un agente de
+día es excelente. Todo lo que es el hilo de la conversación lo tiene el orquestado principal
+y todo lo que son los subagentes van a tener en su interior una hoja en blanco con esto lo que
+hay que hacer. Dale para adelante, no hay ruido, no hay nada, mucho más eficiente y menos errores
+también. Después otra cosa interesante es que generalmente los subagentes son un skill. ¿Sí?
+¿Qué es un skill? Nuevamente, si tenés un Asient que es enorme, después eso se particiona por
+skills. Un skills es pedacitos de contexto que vamos a ir cargando por necesidad, literalmente.
+Por ejemplo, queremos crear un componente React. Tenemos un skill de cómo crear ese componente
+en React. Bien, ¿cuándo hay que hacer un skill? Si ustedes ven que hay algo que es muy repetitivo
+o tienen algo que es muy particular a su proyecto, hay que creer un skill. Hay que hacer una skill
+para todo, ¿no? Bien, empecemos por ahí. Entonces, ¿qué es lo interesante? Generalmente creamos una
+skill para hacer un commit, ¿vale? Entonces, cada vez que voy a hacer un comit, ya sé cómo hacerlo.
+Tengo un skill para eso, pero ¿qué pasa? Mis subagentes generalmente tenemos, como les digo,
+¿no? Un skill que representa que es cómo actuar, pero los míos son superagentes, así no más, son s
+subagentes. ¿Por qué? Porque a su vez cada uno es un skill. Por ejemplo, en SDD no es un skill que
+representa una etapa de este flujo, pero a su vez cada uno puede cargar skills. Ah, eso te interesó.
+Eh, entonces, resumen, es una delegación a un proceso entero de trabajo, no solamente algo de,
+"Ey, andá y crea este archivito, no, esto es mucho más potente." Bien, después tenemos engram, que
+es lo que yo les decía, el cerebro de todo esto, que literalmente es un servidor hecho en goecta
+con SQLite, bien, una base de datos en tu máquina y tiene un MCP para que la gente se conecte
+con el mismo, nada más ni nada menos. Ahora, importante, esto tiene tres formas diferentes por
+layers para acceder a la información. Primero, busca información que haya de proyecto. Si hay,
+fantástico, busca ahora tipos eh de acciones que se haya hecho, tipos de observaciones. Bien, si
+hay una que me gusta, ahí voy y busco todo ese detalle. En resumen, es muy eficiente cuanto
+a tokens. Después todo ese open spec que yo le dije antes se guarda también en engram. Si
+quieren no puede guardar en engram porque no sé, no tengo un proyecto que es público, no quiero
+guardar mis especificaciones dentro del proyecto, se guarda en engram, no hay ningún tipo de
+problema y eso se puede cambiar si queremos. Bien, entonces engramer que hagamos de arquitectura, o
+lo que sea, se guarda acá. Ahora, como les dije, esto ya es eficiente por por lo que quieran. Sí,
+de vuelta va a buscar a ver qué puede haber en cuanto a una temática nosotros queremos, que está
+fantástico. Vamos a buscar ahora qué pasó antes, después de esta sesión, a ver qué pasa, si algo
+que me gusta, ahí voy y me tomo ese contenido en totalidad. Bien. Y además también es privado. Si
+nosotros detectamos que dentro de todo esto hay, por ejemplo, una clave secreta o lo
+que sea, esto se pone en tax private, así como lo ven, y go lo saca. Entonces
+nunca llega a la base de datos. Bien, esa es la idea. Entonces buena que tiene engramo
+esto. Digamos que yo estoy trabajando sobre una tarea, esa tarea voy, la implemento y mientras
+estuve hablando con la IA y por ahí la corregí, se hicieron observaciones sobre toda esa tarea.
+No estaría bueno compartirlo con un compañero, se puede. Entonces esta es la idea. Yo puedo hacer
+lo que es un engramc. Esto automáticamente engram de datos, pero que guarda por proyecto las cosas.
+Entonces va a guardar toda esa memoria dentro de ese proyecto y cualquier persona que tenga
+en git la posibilidad de hacer un git pool, se trae todo esto y hace un git sync import.
+Listo, tenemos todo lo que mi compañero habló con la IA, ¿sí? O mejor dicho, las observaciones que
+hablo con la IA. No quiero guardar cosas de más, ¿se entiende? Esto se jaa, se comprime y se crea
+un manifiesto para el tema de versionado para que no haya ningún tipo de problema de sincronización.
+Ahora vamos a hablar un poquitito del futuro de todo esto. Esto es lo que yo quiero hacer. Es algo
+que ya lo tengo bastante creado. Dentro de poco lo voy a poner así para que ustedes puedan tocarlo.
+Sí, lo voy a hacer open source. Esto es algo que se podría cobrar, pero no lo quiero hacer. Y es el
+tema de Engram Cloud, todo lo que acabo de decir, pero en un servidor. Varias personas conectadas
+directamente hablando y cada observación se guarda en la nube y automáticamente todos sincronizan
+de él. Entonces, en cualquier momento tengo las observaciones de mis compañeros. Sí. Entonces,
+esta sería un poquitito la idea. Yo tengo el servidor con engram, después tengo diferentes
+desarrolladores y cada uno de ellos sincroniza a la nube. Entonces lo que Alan habla, pum, guarda
+en local como un caché, ¿ven? Y eso se sube a la nube. Javier, lo mismo que viene un deb nuevo,
+ya tiene todo bien, pum, para arriba y después viene una persona que está en remoto, lo mismo.
+Entonces cualquiera de estas personas, no importa de vuelta qué tipo de IDE, qué tipo de agente o
+lo que sea estén utilizando, esto tiene que andar porque como es un MCP y es go, anda en cualquier
+lado. Que queres cloud code, queres open code, que queres gemin que queres cursor, esto anda.
+Sí, esto anda. Entonces ahí viene el otro tema también. Como les digo, esto sirve para cualquier
+cosa. Sí, vamos a retomar de vuelta. Cloud Code, Open Code, Gemini CLI, eh después tenemos Codex,
+después tenemos también el hermosísimo de Cursor, eh, y Visual Studio. Anda en todos estos de
+vuelta. Quiero dar soporte antigravity también y Kimi y otros que ustedes quieran, pero para
+eso levanten un ISU y si tienen ganas también pueden crear un pull request sin ningún tipo de
+problema. Bien, entonces, ¿cuál es la idea? Sin este ecosistema que yo les estoy dando, tenemos
+que se pierde contexto entre sesiones. Bien, cada vez que yo levanto una sesión, es
+una sesión nueva, no tengo idea de nada, se pueden repetir BS, se pueden repetir decisiones
+o se pueden equivocar decisiones en cuanto a cosas que ya habíamos tomado antes. Después, si hago
+un onboarding, puedo tardar bastante tiempo, ¿sí? para una persona nueva. Después también
+se desperdician muchos tokens porque entre que pregunto, entre que vuelvo atrás y ese tipo de
+cosas es complicado. Bien, y obviamente también cada dev configura la de manera diferente, por
+lo cual tenemos resultados diferentes. Con el ecosistema, ¿no? La sesión todo se mantiene
+en memoria persistente. Bien, la gente siempre retoma con un contexto previo. El onboarding es
+menos de un día. Yo puedo ir ahí empezar a hacer preguntas y la va a tener contexto de esas cosas.
+Bien, después tenemos un ahorro muy significativo en el uso de tokens y de vuelta es un comando y un
+ecosistema completo para todo el mundo. Entonces, con todo esto vamos a ver cómo se hace. Aquí lo
+tienen. Esto es AI Gentle Stack. Como les dije, es un comando cualquier agente, cualquier sistema
+operativo, lo que ustedes quieran. Entonces, ¿cómo se hace? Es muy sencillo. Uno, pueden traérselo
+de acá directamente. Cada uno de estos tienen ya un comando para Mac Linux o para Windows. Como
+les dije, lo pueden ejecutar en PowerShell y esto les tiene que andar. Mi recomendación
+homew. Mi recomendación es homebrew. Bien, entonces, ¿qué van a hacer? Van a venir acá y van
+a hacer gentle AI, brew install Gentle Gentleman programming tap Gentle AI. Le dan un buen enter
+y yo ya lo tengo, pero pumba, lo tienen. Sí, esto actualiza y te deja t con todo lo último
+de lo último y ya está, ¿no? Vamos a hacer una cosita más porque es muy potente lo que yo tengo.
+Agarren, eh, gentle. E ya lo tengo instalado. Le doy un buen enter pa y ahí lo tenemos. Y qué me
+va a permitir esto? Primero que hace backups, ¿sí? Tiene backups de todas las instalaciones por
+si pasa algo, lo que sea, lo tienen ahí. Y además de eso, ahí viene la parte importante, podemos
+hacer un inicio de instalación. Nos detecta qué sistema operativo tenemos, qué herramientas, qué
+dependencias necesito. Lo único que sí, gente, por ahora tienen que tener Go instalado, ¿sí?
+Y npm son las únicas dos cosas. Después podemos detectar las diferentes configuraciones. Le doy
+un continue. Y ahí está. Entonces, como yo no tengo Visual Studio, no se me marca, pero el resto
+sí. Después le voy a dar un hermosísimo espacio para cada uno, bien, si nosotros queremos, y le
+damos un buen continue. De acá podemos decidir, ¿quieren que hable como yo? Les cuento, habla
+como yo, no insulta, no nada, es cálido, pero sí que es serio. Eh, es una persona que te va a
+agarrar y te va a decir, "Ey, ¿por qué haces esto? Yo no voy a hacer código como un tonto." Bien,
+esa es la idea. Si no, un poquito más neutral, ¿no? No metemos esa forma de Argentina de hablar
+o si no custom. customes, no le metas nada de una forma aparente de hablar directamente. Quiero todo
+lo demás menos eso. Después tenemos cómo queres el ecosistema full gentleman con todo. Habla como
+yo, tiene todo como yo, solamente el ecosistema, quiero la memoria, el SDD, skill, documentaciones
+y demás. Mínimo solamente engram, por ejemplo, o elegí lo que quieras. Vamos a ir full gentleman.
+Y acá viene una parte importante. Esto es algo que metí hace poquitito. Como les digo, esto es
+la es el video actualizado de todo lo que ya venimos viendo. ¿Sí? ¿Qué podemos hacer? Uno,
+instalar el orquestador de SDD para Open Code de una para single clásico, fácil o agárrense con
+esto. Vamos a ver multio para todos aquellos que quieren ir más allá. multi lo que te va a permitir
+es para todas las fases de SDD, que ahora las voy a explicar rápidamente, elegir un modelo de todos
+los proveedores que ya tengan conectados a Open Code. Bien, todos, todos, todos los modelos
+que tengan conectados a Open Code. Entonces, de esta manera ya sabes que esto va a funcionar
+porque es el agente tuyo, ¿bien? Y yo me encargo de instalarles todas las configuraciones para que
+esto funcione. Entonces, ¿qué se puede hacer para todas las fases? ya elegir que es mi recomendación
+y le voy a dar también lo que yo utilizaría. Yo pongo, por ejemplo, para todas las fases, mi
+recomendación ahora mismo es hacer un buen ST 4.6. Bien, para inicializar, Sonet. Para explorar,
+que es ver el Code, ver que hay y demás, Sonet. Necesitamos más. Para hacer una propuesta, atentos
+con esto. Una propuesta es el inicio de todo, tiene que ser un modelo de alto razonamiento, por
+lo cual yo les recomiendo dos en específico. O se van a un Opus o se pueden ir a un Gemini.
+¿Por qué? Porque Gemini es excelente en forma de razonamiento. Bien, miren, $2 de
+output le damos y si yo voy, por ejemplo, al opus vamos a encontrar que es mucho más caro,
+525. Entonces podemos hacer esa alternativa. Bien. Yo les recomendaría Google por ahora, anda muy
+muy bien y de vuelta hay plugins para poder tener Gemini dentro de Open Code, no hay ningún
+tipo de problema, siempre que usan el de Gemini, no el plugin de antigravity porque eso es ilegal.
+Entonces después para hacer especificaciones, ¿sí? También podemos meter el bueno de Google,
+no hay ningún tipo de problema. Esto es algo que quiero que escriba bien, por lo cual si yo quiero,
+miren, podemos tener también Gid Pilot, eh, no hay ningún tipo de problema, que tiene todos,
+ni un problema. Entonces, yo le diría de Google porque de vuelta necesitamos que razone, que tenga
+un buen output para documentaciones. Es excelente, la verdad, para diseño. Ahora sí vamos a
+un diseño más a nivel bien de razonamiento, ¿sí? ¿Cómo técnicamente vamos a implementar esto?
+¿Qué les diría yo? Bueno, del opus tareas. Ahora, ¿cómo es esto? Esto inicializa todo
+el proceso. Este explora el Codebase, todo nuestro proyecto para ver qué está hecho.
+Después se genera una propuesta teniendo todo eso. Se sacan los requerimientos, todo lo que se
+necesite. En cuanto a eso, estos dos se ejecutan en paralelo. Se ejecuta primero la parte de
+especificaciones, qué queremos hacer y el diseño, cómo lo queremos hacer. Una vez que tenemos
+eso, se crean las tareas. ¿Para quién? Para la IA. Este puede ser un Sonet, puede ser algo
+ligerito. Necesitamos mucho, la verdad. Vale, si lo quieren hacer bien así que lasciaciones
+estén buenas, ahí sí Opus e Gemini 3.1 o por qué no un buen codex. Sí, le ven, le meten un
+5.4 y anda espectacular. Bien, después para implementar Set, ya se los digo, para verificar
+que lo que se hizo funcione correctamente, gente, 5.4 Codes es excelente, realmente excelente. Los
+modelos de Open Ei para lo que es descubrimiento de Bugs. Es excelente, así que se lo recomiendo.
+Para documentar para todos este fantástico, SMAR, le voy a decir una cosa, todo lo que está acá
+se puede hacer con cualquier modelo. Empezamos por ahí bien con Sonet, con e de vuelta con
+Open y lo que vos quieras, menos Gemini. Gemini es un desastre para implementar cosas a
+nivel tools. No encuentra las herramientas, no sabe eh a veces cosas que vos tenés disponibles,
+bien eh para darles una idea qué es lo que estoy hablando. Puede ser que se invente que existe una
+herramienta en tu máquina que no existe realmente y tira errores y empieza a hacer cosas raras.
+Entonces, yo le diría para documentaciones y para razonamiento espectacular. El resto éxitos.
+Y después para archivar de vuelta un Sonet, algo así ligerito. ¿Por qué? Porque esto ya es la
+parte final, es la que crea la documentación que termina y demás. Le dan un buen continuar, gente,
+pum, y se instala todo y no tienen que hacer mal y tienen todo instal, se los prometo. Digamos que
+ahora ustedes quieren solamente una parte, bueno, no quieren usar gentle, feo de su parte. Engram,
+sí, engrami. Pum, ahí tienen engram. Espectacular. Es más, vamos a una cosa linda, ¿eh? Ahora sí,
+¿ven? Este es engram. Hermoso. Entonces, Engram, ¿cómo se instala? Lo mismo. Ustedes lo único que
+tienen que hacer es un brew install Gendeman, programming tab. Y ahora ponen engram, pum, y ya
+lo tienen. Es tan sencillo como eso, gente. Así de sencillo. ¿Cómo se actualiza? Así lo ejecutan
+de vuelta y ya está. No tienen que hacer más nada. Bien, ¿cómo hago con Gentle? Eh, ¿cómo hago con
+Asian Teams Light? El tema del SDD y demás, lo mismo. Bien, es prácticamente lo mismo, pero este
+sí que es un poquitito diferente. Ahora van a ver por qué se los digo. Agent Team Light lo que vamos
+a hacer es venir aquí. Uno se tiene que clonar el repositorio de manera local, entra dentro de
+Agen y ejecuta el script. Se termina. Es así de sencillo, es así de tonto. Sí, se los prometo que
+es así de fácil. Y acá tienen el documento que les dije en cuanto todo el tema de ahorro de tokens,
+cómo esto funciona y demás. Lo tienen todo acá, todas las pruebas que se hicieron y demás. Así
+que les recomiendo que lo vean. ¿Para qué? Para entender. Y digamos que ustedes dicen, "Alan, pero
+es mucho texto." Preguntarle a la resumilo de la manera que a mí me gusta. Bien. y que lo haga,
+que te lo explique. No tengas miedo de usar la no hay límite para la Entonces, ¿qué hacen? Clona
+repositorio, como lo tienen acá, y lo único que tienen que hacer es script instal.sh, SH. Pum.
+Acá eligen para qué asistente de IA quieren y ya lo tienen, ya está, hace todo por ustedes, les
+prometo. Ahora, hay cosas, hay cosas que solamente pueden hacerlo con Gendelly, como es el tema de
+los multiagentes con esto y lo otro, porque es algo muy particular, bien, pero en sí con esto ya
+lo pueden tener. Mi recomendación instal Gentle, ya para qué quieren más. Espectacular. Lo único
+que sí les voy a recomendar dentro de Gentle AI, dentro de Gentleman AI, lo único que sí te voy a
+recomendar es que hay hay scripts, bien, también hay script que se pueden utilizar. Entonces, ¿cuál
+es el tema? Hay diferentes script de instalación y hay uno que es para Windows, ¿sí? Entonces, si
+ustedes van, por ejemplo, al apartado de scripts, van a ver que hay dos install. Este es para
+Windows y este es para Linux o Mac y ya está. También está todo hecho, gente. Entonces, esta
+es la forma de instalarlo. Ahora, cosas que me preguntan también Alan. Yo abro Claudio después de
+instalar todo y no sé si me funciona porque cómo elijo el agente de SDD y demás. No lo haces
+desde ahora en Claudio pasa a hacer el por defecto directamente. Okay. Entonces, ¿qué me va a
+permitir esto? Vamos a verlo. Miren, dime, espera. Vamos un poquito más para atrás. Ahora sí vamos
+a abrir, Claudio. Y miren esto. Vamos a decirle, dime de qué va el proyecto. Bien. Y también dime,
+eh, vamos a decir cuántas contribuciones tiene y quiénes. Así no más. Le voy a dar un buen enter.
+Entonces, ¿qué va a pasar? Atentos. Yo les dije que esto tiene un orquestrador principal, que
+es este, ¿no? Que es con el que yo me estoy comunicando, que ahora es un opus con un millón de
+contexto y buscan engramo. Ahí se está metiendo, ya está investigando, ¿no?, con cosas de Git
+y demás. Y de ahí va a ir empezar eh a lo que es el trabajo en sí. Y ahí lo tienen, ya está
+contestando todo, me está dando el tema de las contribuciones y todo. Sí, miren qué lindo. Yo
+hice el 94% del proyecto, David aportó un par de cosas después de contribuciones menores, así
+que fantástico. Ahora vamos un poco más. Vamos a decirle, dame información de los últimos cambios
+que se hicieron, pero mirando el código, no git, le damos por ahí y miren lo que va a suceder. Ahí
+lo miren. Está empezando una fase de exploración, pero claro, gente, lo hace un subagente. Bien,
+no lo está haciendo él. El orquestador no está yendo a hacer el trabajo sucio, lo está haciendo
+directamente un subagente. ¿Qué me permite? Tengo 3% de la ventana de contexto y no se mueve. Eso
+es lo que yo quiero. Todo este trabajo que está sucediendo ahora, que si yo, por ejemplo, hago
+control o puedo verlo. Esto tiene su propia ventana de contexto. Bien. Y además de eso, cuando
+yo estoy trabajando de esta manera, cuando yo creo un subagente, por ejemplo, para SDD, esto va a
+ir y va a sacar todas las skills que yo tengo y las va a utilizar para trabajar en su día a día.
+Entonces, esta es la manera. Mucha gente me dice, "Alan, pero yo qué tengo que hacer, barra y tengo
+que empezar a hacer, por ejemplo, el tema del SDD, todo esto, no, esto está acá para que sepan que
+existe, pero en verdad la gente es el que lo tiene que hacer, no ustedes." Entonces, esto se puede
+inicializar a mano, sí podemos iniciar el proceso de SDD a mano, pero no siempre es necesario. Y la
+mejor forma, gente, lenguaje natural, por ejemplo, implementa un componente con SDD y ya está, que
+lo haga bien. O si no, pasale la implementación. y él solito te va a decir, "Esto es muy potente,
+¿por qué no lo hacemos con SDD?" Esa es la idea. Quiero que todo sea automático. Mucha gente dice
+también, "Alan, pero yo quiero borrar cosas de Engram." No, deja que la IA lo haga. Deja que la
+IA diga cuándo guardar algo y cuándo no dentro de engram. Eso es lo que nosotros queremos. ¿Okay?
+Esa es la idea. Entonces, ahí lo tienen. Ya. ¿Qué pasó? El subagente terminó, me lo da y lo tenemos.
+Una cosa que tiene el bueno de Claudio es que cada vez que yo largo un subagente puede ser 1 2 3 cu
+c subagentes al mismo tiempo, no hay ningún tipo de problema y además pueden ser asíncronos. Eso
+quiere decir que cuando yo ejecuto algo, mientras puedo hacer mis cosas. Bien, atentos. Ahora,
+ahora estoy en un proyecto de BAN con React, que es una cosa de formulario, no sé, algo sabe
+cuándo. Entonces, ¿qué va a pasar? ¿Cómo utilizo ahora todo esto dentro de Open Code? directamente
+estamos acá y haces tab tab tab y tenés SD Orchestrator. Ya estás acá. Listo. Esto es lo que
+tiene Cloud Code, pero ahora lo tenés que elegir, es lo único que les digo. Ahora, acá el modelo que
+ustedes utilicen es el modelo para el orquestador, para el que va a mantener el hilo de
+la ejecución. No va a utilizar mucho, así que no se preocupen. Sí que tiene que ser
+un modelo potente porque tiene que soportar el tema de subagentes para orquestarlos. Bien, si es
+un modelo más livianito, un modelo open source, pero de esos que no se le aguantan tanto, no
+va a andar bien. Les estoy avisando también si es un modelo como, por ejemplo, GPT4, no va a
+andar bien tampoco, les estoy avisando. Entonces, ¿qué pasaría acá? Estoy en este proyecto. Miren
+lo que va a pasar. Le voy a decir, quiero que hagas un eh componente nuevo. No le digo más
+nada. Sí, de react. Mira, así no más. Pumba, un problema de token. Nada, ya lo refresqué ahí.
+Un segundo, eh, le voy a poner 5.4 y le vamos a dar un buen enter y pumba, quiero que hagas un
+componente nuevo, en React, quiero ver qué pasa. Le voy a pedir que haga un componente nuevo React.
+Le voy a poner 5.4. Sí, un segundito y vamos a ver qué pasa. Le doy un enter y que venga la magia,
+gente. Y ahí lo tienen. Dale, pero así como está no alcanza para hacer algo serio. Un componente
+no es una caja con JSX, hermano. Es una pieza de arquitectura con propósito. Props, estado y
+lugar dentro del feature. Si no definimos eso, terminamos metiendo humo en el repositorio.
+Mi recomendación por default, si querés algo reutilizable a un componente en UI dentro de esta
+parte. Si pertenece a una feature, lo meto en otro lugar. Necesito una sola definición de esto.
+¿Qué componente queres exactamente? ¿Qué hace y en qué pantalla feature vive? En resumen, no te
+deja hacer algo de la nada. Sí, y ahí lo tienen. Podemos crear un componente por defecto llamado
+empty state. Vamos a hacer algo. Dale. Vamos con ese, pero implementa dd. Vamos a tirarlo así. Es
+una tontería, no hay necesidad de hacerlo, pero quiero mostrarles rápidamente esto cómo funciona y
+vamos a ver qué pasa. Bien, entonces esto va va a buscar ya si hay algo de SDD, algo de este tipo
+de empty state, como lo ven dentro de Engram. Ahí está. Creo que encontró algo. Está leyendo
+bien algunas ocurrencias. Ahora ya tiene contexto de la situación. Ahora lo va a inicializar y lo
+primero que hace es delegarlo. Lo que yo les dije, lo delega. Estamos con GPT 5.4. Si yo voy para
+bien, lo corté sin querer. Bien, ahí está, ya está inicializando. Entonces, esto tenemos con GPT
+5.4. Pero claro, tenemos una tarea. Si yo ahora hago control X para abajo, entramos y vemos que
+está inicializado todo con GPT53 Codex. Para que ustedes vean cómo esto lo podemos integrar y lo
+podemos ir utilizando. Bien, de esta manera anda todo bien. Y quiero que vean algo, está leyendo
+skills, ¿lo ven? Está leyendo diferentes skills. Está viendo qué skills hay dentro del repositorio.
+No hay. Fantástico. Va a leer todas las que ya tenemos dentro de acá, dentro de mi usuario. Está
+viendo si hay algo dentro del repositorio. En este caso no lo va a ver. Y esto lo va a guardar
+dentro de Engram en un index de skills, de manera que cualquier subagente puede entrar ahí y de una
+tener todo lo necesario. Bien, esa es la principal idea. Y se acuerdan que yo les dije que el bueno
+de Cloud Code puede hacer agentes asíncronos. Yo también. Yo también. Si nosotros estamos haciendo
+una tarea la cual no necesita, ojo con esto, le estoy dando confirmar acá porque quiero que pueda
+leer mis directorios, ¿bien? Para el tema de las skills. Ahora, yo si estoy haciendo una tarea de
+la cual no depende o no necesita bien otra cosa, puedo hacerlo justamente en el background. Le doy
+esa posibilidad a Open Code. Le he creado bien, utilizando un plugin que es eh open source
+también para que ya lo tengan ustedes y puedan ver cómo esto se puede delegar. Y mientras ustedes
+podrían crear más agentes, más lo que sea. Bien, entonces esta es la idea de todo y como verán no
+hay que tocar nada. Sí, no hay que tocar nada. Para ir terminando, cosa muy importante, ¿cómo
+entonces tenemos que pensar todo esto? Esto es así, gente. Primero, tener la mente abierta, tener
+un pensamiento, que es una recomendación así super rápida, que es la IA puede hacer todo. ¿Cómo sí?
+¿Por qué? Piensen que la IA no tiene límites. Los límites los tenemos que descubrir. Eh, de vuelta
+esta charla le digo siempre, pero que me encanta. El creador de Cloud Code estaba debugueando Cloud
+Code encontrando un problema de memoria bien que teníamos en ese momento. Estaba conectando
+sus herramientas de profiling, hacía horas que estaba investigando, haciendo toda a mano
+como hacía siempre porque siempre lo hizo así. Y vino bien una persona de menor experiencia que
+él y dijo, "¿Por qué no lo haces con la AA?" "Hm, dice el creador, "Is true, bien, es verdad." Pum,
+lo hicieron con la A y en 15 minutos lo tienen resuelto, identificado y todo. Sí. Entonces,
+gente, hay que descubrir los límites ahora mismo. No lo sabemos. Nadie lo sabe. Tenemos
+que ir y utilizar, utilizar, utilizar hasta el punto que ya veamos que ya es contraproducente
+y ahí recapitular un poco. Ahora tengo que ver el código, tengo que revisar el código, siempre tenés
+que revisar el código por ahí. Mira el código cuando termine, si querés, cada proceso de SDD
+decirle, "Ey, quiero verlo, bien, quiero que antes de pasar la siguiente, déjame validarlo." Todas
+esas cosas, gente, metan el humano en el loop, bien, dentro del proceso. Es importantísimo que
+ustedes entiendan. Por eso mi agente está pensado para que les enseñe. Si ustedes dicen algo que
+no tiene ni pies ni cabeza, no les va a dejar continuar. Ustedes tienen que ser orquestadores
+del orquestador, ¿se entiende? Son los que llevan la rienda. No dejen que la los maneje. Y si te
+gustó todo esto, le vas a decir hasta tu abuela, le vas a compartir este videazo, le vas a dar
+un buen like, le vas a pegar una s suscribida, le vas a dejar un comentario y de vuelta lo vas
+a compartir en tus padres, lo vas a compartir con el jefe de tu empresa para que diga, eh, guacho,
+instalate esto. Porque tenemos que utilizarlo. Bien, esa es la idea. Así que gente, nos vemos
+en el siguiente videño. Chao, nos vemos. Oh.

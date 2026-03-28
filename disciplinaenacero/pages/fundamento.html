@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="El Fundamento — Protocolo 30 días. Disciplina en Acero.">
+  <title>El Fundamento — Disciplina en Acero</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
+  <style>
+    body { display: flex; flex-direction: column; min-height: 100vh; }
+
+    .fundamento-hero {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+      background: var(--negro);
+    }
+
+    .fundamento-hero__bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 40%, rgba(200,169,110,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 80%, rgba(139,26,26,0.05) 0%, transparent 50%);
+    }
+
+    .fundamento-hero__deco {
+      position: absolute;
+      right: -2rem; bottom: -4rem;
+      font-family: var(--fuente-titulo);
+      font-size: 20vw;
+      color: var(--acero);
+      opacity: 0.07;
+      line-height: 1;
+      user-select: none;
+      letter-spacing: -0.05em;
+    }
+
+    .fundamento-inner {
+      position: relative; z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      max-width: 1100px;
+      width: 100%;
+    }
+
+    /* ── Portada ── */
+    .fundamento-portada {
+      display: flex;
+      justify-content: center;
+      animation: fadeInUp 0.7s ease both;
+    }
+
+    .fundamento-libro {
+      width: 240px;
+      aspect-ratio: 0.7;
+      background: linear-gradient(145deg, #1A1A1A 0%, #0D0D0D 100%);
+      border: 1px solid #333;
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      box-shadow:
+        20px 20px 60px rgba(0,0,0,0.7),
+        -3px 0 0 rgba(200,169,110,0.35),
+        inset 2px 0 0 rgba(255,255,255,0.02);
+      transform: perspective(800px) rotateY(-10deg) rotateX(2deg);
+      transition: transform 0.4s;
+    }
+    .fundamento-libro:hover {
+      transform: perspective(800px) rotateY(-4deg) rotateX(1deg);
+    }
+
+    .fundamento-libro__linea {
+      height: 1px;
+      background: var(--dorado);
+      opacity: 0.4;
+    }
+    .fundamento-libro__editorial {
+      font-family: var(--fuente-etiq);
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      color: var(--dorado);
+      text-transform: uppercase;
+      margin-top: 0.75rem;
+    }
+    .fundamento-libro__titulo {
+      font-family: var(--fuente-titulo);
+      font-size: 2rem;
+      line-height: 1.05;
+      color: var(--blanco);
+    }
+    .fundamento-libro__sub {
+      font-family: var(--fuente-etiq);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--gris-claro);
+      text-transform: uppercase;
+      line-height: 1.6;
+    }
+    .fundamento-libro__dias {
+      font-family: var(--fuente-titulo);
+      font-size: 3rem;
+      color: var(--dorado);
+      line-height: 1;
+      text-align: center;
+      opacity: 0.5;
+    }
+    .fundamento-libro__autor {
+      font-family: var(--fuente-etiq);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--dorado);
+      text-transform: uppercase;
+    }
+
+    /* ── Contenido derecho ── */
+    .fundamento-contenido {
+      animation: fadeInUp 0.7s 0.1s ease both;
+    }
+    .fundamento-contenido .separador { margin: 1.5rem 0; }
+    .fundamento-contenido p { margin-bottom: 1.25rem; }
+
+    .fundamento-lista {
+      list-style: none;
+      margin: 1.5rem 0 2.5rem;
+    }
+    .fundamento-lista li {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--acero);
+      font-size: 0.95rem;
+      color: var(--gris-claro);
+    }
+    .fundamento-lista li::before {
+      content: '⚔';
+      color: var(--dorado);
+      font-size: 0.75rem;
+      margin-top: 0.15rem;
+      flex-shrink: 0;
+    }
+
+    .fundamento-cta {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .fundamento-aviso {
+      font-family: var(--fuente-etiq);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--gris-medio);
+    }
+
+    /* ── Advertencia promociones Gmail ── */
+    .gmail-tip {
+      background: var(--forja);
+      border: 1px solid var(--acero);
+      border-left: 2px solid var(--dorado);
+      padding: 1rem 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .gmail-tip p {
+      font-size: 0.82rem;
+      color: var(--gris-claro);
+      margin: 0;
+      line-height: 1.6;
+    }
+    .gmail-tip strong { color: var(--dorado); }
+
+    /* ── Sección qué sigue ── */
+    .que-sigue {
+      padding: 6rem 0;
+      background: var(--carbon);
+      border-top: 1px solid var(--acero);
+    }
+    .que-sigue__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--acero);
+      margin-top: 3rem;
+    }
+    .que-sigue__item {
+      background: var(--carbon);
+      padding: 2.5rem;
+      transition: background 0.3s;
+    }
+    .que-sigue__item:hover { background: var(--negro); }
+    .que-sigue__num {
+      font-family: var(--fuente-titulo);
+      font-size: 3rem;
+      color: var(--acero);
+      line-height: 1;
+      margin-bottom: 1rem;
+      transition: color 0.3s;
+    }
+    .que-sigue__item:hover .que-sigue__num { color: var(--dorado); }
+    .que-sigue__item h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+
+    /* ── Libro de pago teaser ── */
+    .libro-teaser {
+      padding: 6rem 0;
+      background: var(--negro);
+    }
+    .libro-teaser__inner {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .libro-teaser__badge {
+      display: inline-block;
+      font-family: var(--fuente-etiq);
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border: 1px solid var(--rojo-brasa);
+      color: var(--rojo-brasa);
+      margin-bottom: 1.5rem;
+    }
+    .libro-teaser__precio {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin: 2rem 0;
+    }
+    .libro-teaser__precio-num {
+      font-family: var(--fuente-titulo);
+      font-size: 4rem;
+      color: var(--blanco);
+      line-height: 1;
+    }
+    .libro-teaser__precio-moneda {
+      font-family: var(--fuente-etiq);
+      font-size: 1.2rem;
+      color: var(--gris-claro);
+    }
+    .libro-teaser__precio-desc {
+      font-family: var(--fuente-etiq);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: var(--gris-medio);
+      margin-top: 0.25rem;
+    }
+    .libro-teaser__mock {
+      width: 200px;
+      aspect-ratio: 0.68;
+      background: linear-gradient(145deg, #1A1A1A, #0D0D0D);
+      border: 1px solid #333;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 15px 15px 40px rgba(0,0,0,0.7), -2px 0 0 rgba(200,169,110,0.3);
+      transform: perspective(800px) rotateY(-8deg);
+      margin-left: auto;
+    }
+    .libro-teaser__mock-titulo {
+      font-family: var(--fuente-titulo);
+      font-size: 1.4rem;
+      line-height: 1.05;
+      color: var(--blanco);
+    }
+
+    @media (max-width: 900px) {
+      .fundamento-inner      { grid-template-columns: 1fr; gap: 3rem; }
+      .fundamento-portada    { display: none; }
+      .que-sigue__grid       { grid-template-columns: 1fr; }
+      .libro-teaser__inner   { grid-template-columns: 1fr; }
+      .libro-teaser__mock    { display: none; }
+      .fundamento-hero__deco { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="../index.html" class="nav__logo">DISCIPLINA <span>EN ACERO</span></a>
+    <ul class="nav__links">
+      <li><a href="../index.html#doctrina">Doctrina</a></li>
+      <li><a href="about.html">Nosotros</a></li>
+      <li><a href="ebook.html">El Libro</a></li>
+      <li><a href="merch.html">Merch</a></li>
+    </ul>
+    <div class="nav__hamburger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- ─── HERO ─────────────────────────────────────────────────────── -->
+  <section class="fundamento-hero">
+    <div class="fundamento-hero__bg"></div>
+    <div class="fundamento-hero__deco" aria-hidden="true">30</div>
+
+    <div class="fundamento-inner">
+
+      <!-- Portada simulada -->
+      <div class="fundamento-portada">
+        <div class="fundamento-libro">
+          <div>
+            <div class="fundamento-libro__linea"></div>
+            <div class="fundamento-libro__editorial" style="margin-top:0.75rem;">Disciplina en Acero</div>
+          </div>
+          <div>
+            <div class="fundamento-libro__titulo">El<br>Funda<br>mento</div>
+            <div class="fundamento-libro__dias">30</div>
+            <div class="fundamento-libro__sub">Días de protocolo<br>Sin motivación vacía</div>
+          </div>
+          <div>
+            <div class="fundamento-libro__autor">Andrés Sánchez</div>
+            <div style="height:8px;"></div>
+            <div class="fundamento-libro__linea"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contenido -->
+      <div class="fundamento-contenido">
+        <span class="etiqueta">Acceso Gratuito</span>
+        <div class="separador"></div>
+        <h1 style="font-size: clamp(2.5rem, 5vw, 4rem);">
+          El Fundamento.<br><span class="dorado">Tu protocolo.</span>
+        </h1>
+        <p>
+          No es motivación. Es la arquitectura mínima que se instala primero.
+          Lo que la consistencia produce que la intensidad nunca pudo.
+        </p>
+
+        <ul class="fundamento-lista">
+          <li>30 días de protocolo estructurado sin motivación vacía</li>
+          <li>Los 4 dolores que mantienen al hombre paralizado</li>
+          <li>La distinción entre identidad real y máscara construida</li>
+          <li>La tabla de las tres columnas — donde empieza la diferencia</li>
+          <li>Acciones físicas concretas, no reflexiones abstractas</li>
+        </ul>
+
+        <div class="fundamento-cta">
+          <!-- ↓ REEMPLAZA ESTA URL CON TU LINK DE GOOGLE DRIVE ↓ -->
+          <a
+            href="https://drive.google.com/file/d/1uQzbifYe2FXWHOqHgUGoiB-gFGT0HQlG/view?usp=sharing"
+            class="btn btn--primario"
+            target="_blank"
+            rel="noopener"
+            id="btn-descarga"
+          >
+            ⬇ DESCARGAR EL FUNDAMENTO — GRATIS
+          </a>
+          <p class="fundamento-aviso">PDF · Acceso inmediato · Sin registro adicional</p>
+        </div>
+
+        <!-- Tip Gmail -->
+        <div class="gmail-tip">
+          <p>
+            <strong>¿El correo llegó a Promociones?</strong>
+            Muévelo a tu bandeja principal — los próximos llegarán directo.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── QUÉ SIGUE ─────────────────────────────────────────────────── -->
+  <section class="que-sigue">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:1rem;">
+        <span class="etiqueta reveal">El protocolo en 3 movimientos</span>
+        <div class="separador separador--centro reveal"></div>
+        <h2 class="reveal">Cómo usar<br><span class="dorado">El Fundamento.</span></h2>
+      </div>
+      <div class="que-sigue__grid">
+        <div class="que-sigue__item reveal">
+          <div class="que-sigue__num">01</div>
+          <h3>Lee el diagnóstico</h3>
+          <p>Los primeros dos capítulos nombran con precisión lo que llevas tiempo experimentando sin palabras exactas.</p>
+        </div>
+        <div class="que-sigue__item reveal">
+          <div class="que-sigue__num">02</div>
+          <h3>Llena la tabla</h3>
+          <p>El Capítulo V tiene una tabla de tres columnas. No la saltes. Ahí empieza el trabajo real — y donde la mayoría abandona.</p>
+        </div>
+        <div class="que-sigue__item reveal">
+          <div class="que-sigue__num">03</div>
+          <h3>30 días. Sin excepciones.</h3>
+          <p>El protocolo no mide intensidad. Mide consistencia. Una acción mínima diaria ejecutada sin negociación.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── TEASER LIBRO DE PAGO ──────────────────────────────────────── -->
+  <section class="libro-teaser">
+    <div class="container">
+      <div class="libro-teaser__inner">
+        <div class="reveal">
+          <div class="libro-teaser__badge">Diagnóstico completo</div>
+          <h2>
+            El Fundamento es el suelo.<br>
+            <span class="dorado">El diagnóstico completo<br>es la arquitectura.</span>
+          </h2>
+          <p style="margin-top:1.5rem;">
+            El Fundamento te da el protocolo de base. Pero hay cuatro mecanismos exactos que mantienen al hombre paralizado — y ningún protocolo de 30 días los nombra todos.
+          </p>
+          <p>
+            <em style="color:var(--blanco); font-style:normal;">El Hombre que Dejó de Mentirse</em> es el diagnóstico quirúrgico completo. 101 páginas. Cinco capítulos. Una sola dirección.
+          </p>
+          <div class="libro-teaser__precio">
+            <span class="libro-teaser__precio-moneda">$</span>
+            <span class="libro-teaser__precio-num">9</span>
+            <span class="libro-teaser__precio-moneda">USD</span>
+          </div>
+          <p class="libro-teaser__precio-desc">Precio de lanzamiento — sube a $17 después de la primera semana</p>
+          <div style="margin-top:2rem;">
+            <a href="ebook.html" class="btn btn--primario">VER EL DIAGNÓSTICO COMPLETO →</a>
+          </div>
+        </div>
+        <div class="reveal" style="display:flex; justify-content:center;">
+          <div class="libro-teaser__mock">
+            <div style="height:1px; background:var(--dorado); opacity:0.4;"></div>
+            <div>
+              <div style="font-family:'Bebas Neue',sans-serif; font-size:1.6rem; line-height:1.05; color:var(--blanco);">El Hombre que Dejó de Mentirse</div>
+            </div>
+            <div>
+              <div style="font-family:var(--fuente-etiq); font-size:0.6rem; letter-spacing:0.2em; color:var(--dorado);">ANDRÉS SÁNCHEZ</div>
+              <div style="height:1px; background:var(--dorado); opacity:0.4; margin-top:0.75rem;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__marca">
+          <span class="nav__logo">DISCIPLINA <span>EN ACERO</span></span>
+          <p>Una doctrina para el hombre que sabe que algo está mal y ya no acepta respuestas vacías.</p>
+        </div>
+        <div class="footer__col">
+          <h4>Navegación</h4>
+          <ul>
+            <li><a href="../index.html">Inicio</a></li>
+            <li><a href="about.html">Doctrina</a></li>
+            <li><a href="ebook.html">El Libro</a></li>
+            <li><a href="merch.html">Merch</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="terminos.html">Términos y Condiciones</a></li>
+            <li><a href="mailto:contacto@disciplinaenacero.com">contacto@disciplinaenacero.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__base">
+        <span class="footer__copy">© 2026 Disciplina en Acero. Todos los derechos reservados.</span>
+        <span class="footer__frase">"El acero no se oxida con orgullo; se templa con trabajo implacable."</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    // Si viene con ?nombre= en la URL (desde confirmacion.html), personalizar
+    const params = new URLSearchParams(window.location.search);
+    const nombre = params.get('nombre');
+    if (nombre) {
+      const btn = document.getElementById('btn-descarga');
+      if (btn) btn.textContent = `⬇ ${nombre.toUpperCase()}, DESCARGA TU FUNDAMENTO`;
+    }
+  </script>
+</body>
+</html>

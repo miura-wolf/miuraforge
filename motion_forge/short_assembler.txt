@@ -1,0 +1,10 @@
+Listo. Una advertencia honesta antes de que lo instales:
+vfx.Zoom() — el README muestra vfx.Zoom(scale=1.05) como escala fija. El zoom progresivo (que crece a lo largo del clip) puede requerir un parámetro diferente según la versión instalada. Cuando lo pruebes, si Zoom(start_scale=1.0, end_scale=1.08) falla, lo corrijo a la sintaxis exacta que reporte el error.
+Instalación en tu máquina:
+bashpip install movielite pictex
+# ffmpeg debe estar en PATH — si no está:
+# Windows: descargar de ffmpeg.org y agregar bin/ al PATH
+Primer test cuando tengas un Short listo:
+bashpython short_assembler.py --listar
+python short_assembler.py --id S1_W1_disciplina --calidad MIDDLE
+MIDDLE para el primer test — más rápido. Si el resultado es bueno, subes a HIGH para producción.

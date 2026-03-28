@@ -1,0 +1,24 @@
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/fundamento"
+  to = "/#fundamento"
+  status = 301
+
+[[redirects]]
+  from = "/libro"
+  to = "/pages/ebook.html"
+  status = 301
+
+[[redirects]]
+  from = "/terminos"
+  to = "/pages/terminos.html"
+  status = 301
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

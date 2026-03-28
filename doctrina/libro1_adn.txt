@@ -1,0 +1,63 @@
+```json
+{
+  "analyst_report": {
+    "title": "Inteligencia Doctrinal: El Hombre que Dejó de Mentirse",
+    "source_book": "El Hombre que Dejó de Mentirse: Cómo dejar de sobrevivir y empezar a construirte",
+    "author": "Andrés Sánchez - Disciplina en Acero",
+    "summary": "Este informe extrae la inteligencia doctrinal fundamental del libro 'El Hombre que Dejó de Mentirse', identificando los cuatro dolores maestros que subyacen a la experiencia masculina de desorientación, sus mecanismos psicológicos y las secuencias de interrupción prescritas. Además, se recopilan las 'Frases de Acero' más impactantes y las metáforas visuales recurrentes que estructuran la narrativa.",
+    "master_pains": [
+      {
+        "name": "El Silencio que te Está Matando",
+        "chapter_reference": "Capítulo I",
+        "symptom": "Ruido de fondo permanente, irritabilidad sin causa aparente, explosiones desproporcionadas, distancia emocional con seres queridos, soledad estructural (incluso rodeado de personas), entumecimiento emocional (no sentir nada, ver la vida desde fuera), pérdida de humor y creatividad, incapacidad de conectar genuinamente, temor a morir solo.",
+        "mechanism": "La creencia internalizada de que 'un hombre fuerte calla' o es 'de cemento', absorbiendo esta lección desde la infancia. Represión de emociones (empujar hacia abajo y tapar la salida) en lugar de procesamiento (darle un destino concreto). La cultura terapéutica dominante ofrece validación, pero muchos hombres buscan resolución y dirección, no solo escucha, lo que refuerza el silencio cuando no encuentran lo que necesitan.",
+        "interruption_sequence": "La acción física como lenguaje del sistema nervioso masculino. Procesar el material emocional a través del movimiento, la ejecución de tareas concretas con el cuerpo. Esto no 'soluciona' el problema de raíz, pero interrumpe el ciclo de compresión, crea espacio para el movimiento interno y aporta claridad. 'El cuerpo no miente. Cuando el cerebro no puede procesar, el cuerpo lo hace por él. Dale una tarea física concreta y observa lo que se mueve adentro.'"
+      },
+      {
+        "name": "La Máscara que Construiste para Sobrevivir",
+        "chapter_reference": "Capítulo II",
+        "symptom": "Proyectar una versión de uno mismo que no es completamente real, sentir que la aprobación recibida no es 'propia' sino de la máscara, aislamiento de uno mismo, pérdida de contacto con las preferencias y límites genuinos, vergüenza interna ('creo que soy una mala persona o que estoy roto'), sensación de incomodidad constante, confianza en sí mismo en cero.",
+        "mechanism": "Una adaptación aprendida donde 'mostrarte real es peligroso' debido a experiencias pasadas donde la honestidad o la vulnerabilidad tuvieron un costo (juicio, rechazo, daño). La ausencia de un modelo masculino auténtico en la infancia lleva a adoptar 'caricaturas' sociales. La vergüenza no reconocida se convierte en la arquitectura interna que sostiene la máscara. Las expectativas masculinas contradictorias e imposibles de cumplir simultáneamente.",
+        "interruption_sequence": "La construcción de una identidad real mediante 'acciones repetidas que sean coherentes con los valores que decides sostener', independientemente de cómo te sientas o la aprobación externa. 'No con afirmaciones... Con actos ejecutados en el mundo físico que depositen nueva evidencia en el registro interno.' Elegir con precisión a quién mostrar vulnerabilidad (inteligencia táctica). 'La identidad sigue a la ejecución. No al revés.'"
+      },
+      {
+        "name": "El Vacío no es Depresión. Es Dirección sin Instalar.",
+        "chapter_reference": "Capítulo III",
+        "symptom": "Sensación de vacío, estar 'presente sin estar realmente ahí', funcionar sin propósito, la rutina diaria no produce satisfacción ni significado, 'desvanecerse lentamente', anhedonia (incapacidad de sentir placer, 'detrás de una pared de cristal'), parálisis por análisis, susceptibilidad al ruido externo y agendas ajenas, colapso ante la adversidad.",
+        "mechanism": "Ausencia de una 'arquitectura de la vida cotidiana' (estructura, dirección, propósito concreto y acción orientada). El sistema dopaminérgico de recompensa secuestrado por el sobreconsumo de estimulación artificial de alta intensidad y bajo esfuerzo (scroll infinito, notificaciones, contenido on-demand). Esto eleva los umbrales de recompensa, haciendo que los esfuerzos reales de construcción parezcan 'áridos'. Vivir anestesiado para evitar preguntas existenciales.",
+        "interruption_sequence": "Instalación de dirección a través de una secuencia específica de acciones consistentes: 1) Definir una *sola cosa concreta* a construir (no propósito abstracto). 2) Definir una *acción mínima diaria* ejecutable hacia esa cosa. 3) *Registrar la ejecución*, no el resultado. Es crucial que el cuerpo sea parte de la ecuación: movimiento físico sostenido para restablecer el sistema de recompensa y aumentar la claridad mental. 'El propósito no se encuentra. Se construye.'"
+      },
+      {
+        "name": "El Precio de Ser el Proveedor Invisible",
+        "chapter_reference": "Capítulo IV",
+        "symptom": "Sentirse un 'fracaso total como ser humano' a pesar de haber trabajado y cumplido con sus responsabilidades, soledad profunda del 'pilar' que sostiene todo sin reconocimiento, carga mental invisible y no registrada, la sensación de que el estándar de suficiencia se mueve constantemente hacia arriba, interpretar las dificultades económicas como una 'condena existencial', 'Odio decepcionarte'.",
+        "mechanism": "Fusión del valor del hombre con su producción ('el valor del hombre es su producción'), una creencia arraigada históricamente pero desactualizada. La invisibilidad de la carga mental masculina (solo se nota cuando falla) lleva a internalizar la idea de que su contribución es irrelevante. La adaptación hedónica combinada con expectativas externas imposibles. La internalización de estereotipos masculinos que prohíben la vulnerabilidad. La 'responsabilidad como condena' donde cada fracaso define al hombre como insuficiente.",
+        "interruption_sequence": "Redefinir el valor sin tirar la responsabilidad. Separar el valor propio de la producción material, entendiéndolo como lo que se construye y cómo se sostiene con integridad. Pasar de la 'responsabilidad como condena' a la 'responsabilidad como elección', asumiendo compromisos porque se eligen, no para probar la suficiencia. Actuar como un 'constructor consciente' que edifica por decisión propia, no por miedo a no ser suficiente. 'Eres responsable de lo que haces. No eres lo que produces. Esa distinción no te exime de nada.'"
+      }
+    ],
+    "frases_de_acero": [
+      "No estás roto. Estás desorientado. Esa diferencia lo cambia todo. Lo roto no tiene solución. Lo desorientado solo necesita un mapa y la decisión de usarlo.",
+      "Callar no es fortaleza. Es deuda diferida. Tarde o temprano, el silencio presenta su factura. Y los intereses son altos.",
+      "El hombre no necesita que le digan que su dolor es válido. Necesita que alguien le diga cómo superarlo. Esa diferencia no es menor. Es estructural.",
+      "El cuerpo no miente. Cuando el cerebro no puede procesar, el cuerpo lo hace por él. Dale una tarea física concreta y observa lo que se mueve adentro.",
+      "No puedes construir sobre un plano que no es tuyo. Puedes ejecutarlo. Puedes perfeccionarlo. Pero siempre sentirás que algo no encaja. Porque no encaja.",
+      "Intentar ser el hombre que todos tienen en la cabeza es la forma más eficiente de no ser nadie. Ni ellos. Ni tú.",
+      "El vacío no siempre es depresión. A veces es simplemente la señal de que instalaste el edificio pero nunca pusiste el motor. La estructura está. La dirección no.",
+      "El propósito no es un sentimiento que esperas tener antes de actuar. Es lo que construyes actuando repetidamente en una dirección que decides que vale la pena. Primero actúas. Después sientes el propósito.",
+      "Tu valor no es tu salario. No es tu producción. No es lo que puedes demostrar en términos materiales. Es lo que construyes, cómo lo construyes y con qué integridad lo sostienes. Esa distinción lo cambia todo.",
+      "La identidad sigue a la ejecución. No al revés."
+    ],
+    "metaphoras_visuales_recurrentes": [
+      "El Hombre en el Yunque / Forja / Acero (transformación, resistencia, trabajo duro, materia prima)",
+      "Máscara / Papel / Caricatura (falsa identidad, actuación, proyecciones sociales)",
+      "Edificio / Arquitectura / Cimiento / Suelo Firme / Ladrillo (construcción de identidad, estructura, base sólida)",
+      "Mapa / Brújula / Dirección / Vector / Norte (orientación, propósito, guía)",
+      "Pared de Cristal (anhedonia, desconexión, ver la vida sin sentirla)",
+      "Pilar (sostén invisible, carga, soledad del que soporta)",
+      "Tren / Vía (oportunidades perdidas, trayectoria de vida, inmovilidad)",
+      "Deuda / Factura / Intereses (costo acumulado del silencio y la inacción)",
+      "Agua (condición de fondo, elemento envolvente de la soledad crónica)"
+    ]
+  }
+}
+```

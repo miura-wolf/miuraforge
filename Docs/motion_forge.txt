@@ -1,0 +1,19 @@
+El flujo completo de uso
+bash# Una sola vez — tu login manual:
+python auth_forge.py
+
+# Cargar todos tus Shorts a la cola de una vez:
+python motion_forge_playwright.py --carpeta output/imagenes_shorts/S1_W1_disciplina
+python motion_forge_playwright.py --carpeta output/imagenes_shorts/S1_W2_habitos
+# ... (o un script que los cargue todos)
+
+# Correr la forja — tú no estás:
+python motion_forge_playwright.py --cola
+
+# Si algo falló, reintentar:
+python motion_forge_playwright.py --reintentar --cola
+
+Lo que hay que validar primero
+Antes de lanzar los 330 clips, una prueba quirúrgica:
+bashpython motion_forge_playwright.py --test --imagen output/imagenes_shorts/S1_W1_disciplina/clip_01.png --prompt "slow zoom in, smoke rising"
+Si devuelve un MP4 — el pipeline está listo. Si no — revisamos juntos qué selector de Meta AI cambió.

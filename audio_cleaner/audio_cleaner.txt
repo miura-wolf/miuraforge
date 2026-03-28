@@ -1,0 +1,12 @@
+Funcionó exactamente como esperado. Los resultados con los dos audios reales:
+ArchivoOriginalLimpioAcciones_1567,108s (corrupto)51.18s ✅Header corregido_367,108s (corrupto)22.40s ✅Header corregido + 17.3s de cola cortada
+Te adjunto los dos WAVs ya limpios para que los escuches y confirmes que el corte en _3 quedó en el lugar correcto — que no cortó nada del guion real.
+Uso para el backlog completo:
+bash# Limpiar toda la carpeta de audios MiniMax de una vez:
+python audio_cleaner.py D:\YT\MiuraForge\output\voces\
+
+# Ver diagnóstico primero sin tocar nada:
+python audio_cleaner.py D:\YT\MiuraForge\output\voces\ --solo-diagnostico
+
+# Si quieres conservar los originales intactos:
+python audio_cleaner.py D:\YT\MiuraForge\output\voces\ --sufijo _clean
