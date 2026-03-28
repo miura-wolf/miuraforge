@@ -1,0 +1,60 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Environment variables (NEVER commit)
+.env
+.env.local
+.env.*.local
+
+# Output files (generated content)
+output/
+output_final/
+entregas/
+ENTREGA_*/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Google credentials (NEVER commit)
+*.json
+!core/doctrina_prohibida.json
+!core/doctrina_industrial.json
+!package.json
+!package-lock.json
+
+# Playwright state (auth cookies)
+meta_state*.json
+
+# Temporary files
+*.tmp
+*.bak
+
+# Node (si aplica)
+node_modules/
+
+# Audio/Video generated files
+*.wav
+*.mp3
+*.mp4
+*.webm
+*.avi
