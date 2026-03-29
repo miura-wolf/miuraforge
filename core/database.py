@@ -172,7 +172,9 @@ class Database:
                 "Cuerpo_Raw",
                 "Tags",
                 "ReadTime_Min",
-                "Featured"
+                "Featured",
+                "ANCLA_VERDAD",
+                "LIBRO_ESTADO"
             ],
         }
 
@@ -208,12 +210,26 @@ class Database:
                     if nombre_upper in attr_map:
                         setattr(self, attr_map[nombre_upper], ws)
                 else:
-                    actuales = ws.row_values(1)
-                    if [h.strip().upper() for h in actuales if h.strip()] != [
-                        h.upper() for h in headers_esperados
-                    ]:
+                    actuales = [h.strip() for h in ws.row_values(1) if h.strip()]
+                    actuales_upper = [h.upper() for h in actuales]
+                    esperados_upper = [h.upper() for h in headers_esperados]
+
+                    # Detectar columnas nuevas que faltan en la hoja existente
+                    faltantes = [h for h, hu in zip(headers_esperados, esperados_upper) if hu not in actuales_upper]
+
+                    if faltantes:
+                        print(f"🔩 [Escudo] Agregando {len(faltantes)} columnas nuevas a {nombre_oficial}: {faltantes}")
+                        # Expandir worksheet si hace falta
+                        cols_actuales = ws.col_count
+                        cols_necesarias = len(actuales) + len(faltantes)
+                        if cols_necesarias > cols_actuales:
+                            ws.resize(cols=cols_necesarias)
+                        # Escribir los headers faltantes al final de la fila 1
+                        for idx, header in enumerate(faltantes):
+                            col_pos = len(actuales) + idx + 1
+                            ws.update_cell(1, col_pos, header)
+                    elif actuales_upper != esperados_upper:
                         print(f"🛠️ [Escudo] Restaurando estructura en: {nombre_oficial}")
-                        # Limpiamos la fila 1 para evitar que queden cabeceras sobrantes y causen duplicados
                         ws.update("1:1", [[""] * len(actuales)])
                         ws.update("A1", [headers_esperados])
             except Exception as e:

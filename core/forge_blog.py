@@ -4,12 +4,16 @@ forge_blog.py — MiuraForgeEngine / Blog Engine
 Módulo MF-003-Astro: Doctrina Digital
 
 Flujo completo:
-  Google Sheets (Estado = LISTO_PARA_FORJAR)
+  Google Sheets (LIBRO_ESTADO = ancla_lista)
     → Lee fila de BLOG_CONTENIDO
-    → Alchemist transforma Cuerpo_Raw en Reseña de Acero
+    → Blog Alchemist (core/blog_alchemist.py) transforma Cuerpo_Raw en Reseña de Acero
+    → ANCLA_VERDAD se inserta INTACTA (jamás se parafrasea)
     → Genera archivo .md en src/content/blog/{slug}.md
-    → Actualiza Estado = PUBLICADO en Sheets
+    → Actualiza LIBRO_ESTADO = publicado en Sheets
     → Llama al Build Hook de Netlify al terminar
+
+Pipeline separado de alchemist.py (guiones YouTube).
+Solo procesa registros donde LIBRO_ESTADO = 'ancla_lista'.
 
 Prerequisitos:
   pip install python-frontmatter gspread
@@ -18,7 +22,7 @@ Variables de entorno (.env de MiuraForge):
   NETLIFY_BUILD_HOOK=https://api.netlify.com/build_hooks/TU_ID
 
 Uso:
-  python forge_blog.py                    # procesa todos los LISTO_PARA_FORJAR
+  python forge_blog.py                    # procesa todos los ancla_lista
   python forge_blog.py --dry-run          # simula sin escribir archivos ni llamar Netlify
   python forge_blog.py --id 3             # procesa solo la fila con ID = 3
   python forge_blog.py --sin-netlify      # genera .md pero no dispara el build
@@ -46,25 +50,27 @@ NETLIFY_HOOK    = os.getenv("NETLIFY_BUILD_HOOK", "")
 
 SHEET_NAME      = "Miura_Blog_Content"
 TAB_NAME        = "BLOG_CONTENIDO"
-ESTADO_PROCESAR = "LISTO_PARA_FORJAR"
-ESTADO_LISTO    = "PUBLICADO"
+ESTADO_PROCESAR = "ancla_lista"      # LIBRO_ESTADO: solo procesar cuando el ancla está lista
+ESTADO_LISTO    = "publicado"         # LIBRO_ESTADO: estado tras publicación
 
 # Columnas de la hoja (deben coincidir exactamente con los headers del Sheet)
 COL = {
-    "id":          "A: ID",
-    "estado":      "B: Estado",
-    "titulo":      "C: Título",
-    "slug":        "D: Slug",
-    "fecha":       "E: Fecha",
-    "descripcion": "F: Descripción (meta)",
-    "keywords":    "G: Keywords",
-    "categoria":   "H: Categoría",
-    "imagen":      "I: Imagen_URL",
-    "amazon":      "J: Enlace_Afiliado_Amazon",
-    "cuerpo":      "K: Cuerpo_Raw",
-    "tags":        "L: Tags",
-    "readtime":    "M: ReadTime_Min",
-    "featured":    "N: Featured",
+    "id":           "ID",
+    "estado":       "Estado",
+    "titulo":       "Título",
+    "slug":         "Slug",
+    "fecha":        "Fecha",
+    "descripcion":  "Descripción",
+    "keywords":     "Keywords",
+    "categoria":    "Categoría",
+    "imagen":       "Imagen_URL",
+    "amazon":       "Enlace_Afiliado",
+    "cuerpo":       "Cuerpo_Raw",
+    "tags":         "Tags",
+    "readtime":     "ReadTime_Min",
+    "featured":     "Featured",
+    "ancla":        "ANCLA_VERDAD",
+    "libro_estado": "LIBRO_ESTADO",
 }
 
 # ---------------------------------------------------------------------------
@@ -76,7 +82,7 @@ def conectar_sheets():
         sys.path.append(str(BASE_DIR))
         from core.database import Database
         db = Database()
-        hoja = db.spreadsheet.worksheet(TAB_NAME)
+        hoja = db.blog_contenido
         return db, hoja
     except Exception as e:
         print(f"❌ Error conectando con Sheets: {e}")
@@ -88,7 +94,8 @@ def leer_pendientes(hoja, id_especifico: str = "") -> list[dict]:
     registros = hoja.get_all_records()
     if id_especifico:
         return [r for r in registros if str(r.get(COL["id"], "")).strip() == id_especifico]
-    return [r for r in registros if str(r.get(COL["estado"], "")).strip() == ESTADO_PROCESAR]
+    # Solo procesa registros donde LIBRO_ESTADO == ancla_lista
+    return [r for r in registros if str(r.get(COL["libro_estado"], "")).strip().lower() == ESTADO_PROCESAR]
 
 
 def actualizar_estado(hoja, id_fila: str, nuevo_estado: str):
@@ -103,54 +110,52 @@ def actualizar_estado(hoja, id_fila: str, nuevo_estado: str):
     return False
 
 
+def actualizar_libro_estado(hoja, id_fila: str, nuevo_estado: str):
+    """Actualiza la columna LIBRO_ESTADO para un registro específico."""
+    registros = hoja.get_all_records()
+    headers   = hoja.row_values(1)
+    col_id    = headers.index(COL["id"]) + 1
+    col_libro = headers.index(COL["libro_estado"]) + 1
+    for i, r in enumerate(registros, start=2):
+        if str(r.get(COL["id"], "")).strip() == str(id_fila).strip():
+            hoja.update_cell(i, col_libro, nuevo_estado)
+            return True
+    return False
+
+
 # ---------------------------------------------------------------------------
-# ALCHEMIST — transformación de texto a Reseña de Acero
+# BLOG ALCHEMIST & VISUALIZER — módulos separados
 # ---------------------------------------------------------------------------
 
-PROMPT_ALCHEMIST = """Eres el Alchemist de Disciplina en Acero.
+def llamar_blog_alchemist(titulo: str, cuerpo_raw: str, ancla_verdad: str = "", enlace_amazon: str = "") -> str:
+    """Invoca al Blog Alchemist para generar la Reseña de Acero.
 
-Tu misión: transformar el texto en bruto en una RESEÑA DE ACERO.
-
-DOCTRINA INQUEBRANTABLE:
-1. Tono: masculino, autoritario, filosófico de acción
-2. NO consuelas, NO motivas con vacío, NO usas frases de coaching genérico
-3. REVELAS el autoengaño, DIAGNOSTICAS el problema, ORDENAS la acción
-4. El libro reseñado es el "qué". "El Hombre que Dejó de Mentirse" es el "quién" y el "cómo"
-5. Metáforas permitidas: acero, forja, fragua, katana, yunque, vacío, presión, carbono
-6. Verbos PROHIBIDOS: "podrías", "quizás", "tal vez", "intenta", "considera"
-7. Estructura: Problema → Revelación incómoda → Acción concreta → CTA
-
-ESTRUCTURA DEL ARTÍCULO:
-- Apertura impactante (2-3 párrafos): golpe directo al problema
-- H2 "El mapa sin el acero": análisis crítico del libro desde la doctrina
-- H2 "La forja real": qué da el libro + qué falta sin identidad de acero
-- H2 "Veredicto de acero": conclusión, 2-3 párrafos
-- CTA final: párrafo que lleva al libro "El Hombre que Dejó de Mentirse"
-
-LONGITUD: 600-900 palabras. Cada palabra debe pesar.
-
-TÍTULO DEL ARTÍCULO: {titulo}
-TEXTO EN BRUTO (transforma esto):
-{cuerpo_raw}
-
----
-Entrega SOLO el contenido del artículo en Markdown. Sin explicaciones, sin comentarios.
-Comienza directamente con el primer párrafo.
-"""
-
-
-def llamar_alchemist(titulo: str, cuerpo_raw: str) -> str:
-    """Llama al Alchemist (LLM del engine) para transformar el texto."""
+    Pipeline completamente separado de alchemist.py (guiones YouTube).
+    El ANCLA_VERDAD se inserta INTACTA — jamás se parafrasea.
+    """
     try:
-        from llm.factory import LLMFactory
-        brain = LLMFactory.get_brain("alchemist")
-        prompt = PROMPT_ALCHEMIST.format(titulo=titulo, cuerpo_raw=cuerpo_raw)
-        resultado = brain.generate(prompt)
-        return resultado.strip()
+        from core.blog_alchemist import invocar_blog_alchemist
+        return invocar_blog_alchemist(
+            titulo=titulo,
+            cuerpo_raw=cuerpo_raw,
+            ancla_verdad=ancla_verdad,
+            enlace_amazon=enlace_amazon,
+        )
     except Exception as e:
-        print(f"  ⚠️  Error en Alchemist: {e}")
+        print(f"  ⚠️  Error en Blog Alchemist: {e}")
         print("  Usando texto en bruto sin transformar...")
         return cuerpo_raw
+
+
+def llamar_blog_visualizer(titulo: str, contenido: str, slug: str) -> str:
+    """Invoca al Blog Visualizer para diseñar y forjar la imagen de portada."""
+    try:
+        from core.blog_visualizer import crear_visual_blog
+        # El visualizer usa el resumen (primeros 500 chars) para el prompt
+        return crear_visual_blog(titulo, contenido[:500], slug)
+    except Exception as e:
+        print(f"  ⚠️  Error en Blog Visualizer: {e}")
+        return ""
 
 
 # ---------------------------------------------------------------------------
@@ -181,6 +186,13 @@ def generar_md(row: dict, contenido_generado: str, output_dir: Path, dry_run: bo
     slug      = row.get(COL["slug"], "").strip() or generar_slug(titulo)
     fecha_raw = row.get(COL["fecha"], "").strip() or datetime.now().strftime("%Y-%m-%d")
     desc      = row.get(COL["descripcion"], "").strip()
+    if not desc:
+        # Fallback desc: Strip Markdown headers and markdown bold syntax, take 150 chars
+        clean_content = re.sub(r'#.*?\n', '', contenido_generado)
+        clean_content = re.sub(r'\*\*(.*?)\*\*', r'\1', clean_content)
+        clean_content = clean_content.replace('\n', ' ').strip()
+        desc = clean_content[:150] + ("..." if len(clean_content) > 150 else "")
+
     keywords  = [k.strip() for k in row.get(COL["keywords"], "").split(",") if k.strip()]
     categoria = row.get(COL["categoria"], "Reseñas").strip()
     imagen    = row.get(COL["imagen"], "").strip()
@@ -267,7 +279,7 @@ def forjar_blog(dry_run: bool = False, id_especifico: str = "", sin_netlify: boo
     pendientes = leer_pendientes(hoja, id_especifico)
 
     if not pendientes:
-        msg = f"ID {id_especifico}" if id_especifico else "Estado = LISTO_PARA_FORJAR"
+        msg = f"ID {id_especifico}" if id_especifico else "LIBRO_ESTADO = ancla_lista"
         print(f"✅ No hay artículos pendientes ({msg})")
         return
 
@@ -283,6 +295,8 @@ def forjar_blog(dry_run: bool = False, id_especifico: str = "", sin_netlify: boo
         id_fila = str(row.get(COL["id"], "")).strip()
         titulo  = row.get(COL["titulo"], "").strip()
         cuerpo  = row.get(COL["cuerpo"], "").strip()
+        ancla   = str(row.get(COL["ancla"], "")).strip()
+        amazon  = str(row.get(COL["amazon"], "")).strip()
 
         print(f"{'─'*60}")
         print(f"📝 [{id_fila}] {titulo[:55]}...")
@@ -296,9 +310,23 @@ def forjar_blog(dry_run: bool = False, id_especifico: str = "", sin_netlify: boo
             print(f"  ⚠️  Cuerpo_Raw vacío — generando esqueleto básico")
             cuerpo = f"Reseña de {titulo}. Tema: disciplina, identidad, forja del hombre."
 
-        # Transformar con el Alchemist
-        print(f"  🔧 Alchemist procesando...")
-        contenido = llamar_alchemist(titulo, cuerpo)
+        if ancla:
+            print(f"  🗡️  Ancla del Soberano detectada ({len(ancla)} chars)")
+        else:
+            print(f"  ⚠️  Sin ANCLA_VERDAD — se generará sin Voz del Soberano")
+
+        # Transformar con el Blog Alchemist (módulo separado)
+        print(f"  🔧 Blog Alchemist procesando...")
+        contenido = llamar_blog_alchemist(titulo, cuerpo, ancla, amazon)
+
+        # Generar imagen con el Blog Visualizer (módulo separado)
+        slug = row.get(COL["slug"], "").strip() or generar_slug(titulo)
+        print(f"  🎨 Blog Visualizer forjando estética...")
+        img_rel_path = llamar_blog_visualizer(titulo, contenido, slug)
+
+        if img_rel_path:
+            # Sincronizar el path de la imagen en el row para el .md
+            row[COL["imagen"]] = img_rel_path
 
         # Generar .md
         ruta = generar_md(row, contenido, BLOG_OUTPUT_DIR, dry_run)
@@ -306,8 +334,9 @@ def forjar_blog(dry_run: bool = False, id_especifico: str = "", sin_netlify: boo
         if ruta:
             generados += 1
             if not dry_run:
-                actualizar_estado(hoja, id_fila, ESTADO_LISTO)
-                print(f"  📊 Estado actualizado → {ESTADO_LISTO}")
+                # Actualizar LIBRO_ESTADO a 'publicado'
+                actualizar_libro_estado(hoja, id_fila, ESTADO_LISTO)
+                print(f"  📊 LIBRO_ESTADO actualizado → {ESTADO_LISTO}")
         else:
             fallidos += 1
 

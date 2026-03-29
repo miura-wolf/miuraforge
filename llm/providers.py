@@ -162,7 +162,7 @@ class NvidiaProvider:
         payload = {
             "model": self.model,
             "messages": [{"role": "user", "content": prompt}],
-            "max_tokens": 1048,
+            "max_tokens": 4096,
             "temperature": temperature,
             "frequency_penalty": frequency_penalty,
             "top_p": 1.0,
