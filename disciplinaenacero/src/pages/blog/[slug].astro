@@ -1,18 +1,19 @@
 ---
 // src/pages/blog/[slug].astro
 // Ruta dinámica — genera una página por cada .md en src/content/blog/
-import { getCollection, render } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 import BlogPostLayout from '../../layouts/BlogPostLayout.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts.map((post) => ({
-    params: { slug: post.id },   // post.id = nombre del archivo sin .md
-    props:  { post },
+    params: { slug: post.data.slug }, // usar slug del frontmatter
+    props: { id: post.id }, // pasar solo el ID, no el objeto completo
   }));
 }
 
-const { post } = Astro.props;
+const { id } = Astro.props;
+const post = await getEntry('blog', id);
 const { Content } = await render(post);
 ---
 
