@@ -1,0 +1,354 @@
+---
+// Merch — Tienda (placeholder para futuro Printful/Printify)
+import BaseLayout from '../layouts/BaseLayout.astro';
+import LeadCaptureForm from '../components/LeadCaptureForm.astro';
+---
+
+<BaseLayout 
+  title="Merch — Disciplina en Acero"
+  description="La doctrina en tu piel. Próximamente — prendas y accesorios forjados con el mismo lenguaje que el canal."
+>
+  <style>
+    .merch-hero {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 5rem;
+      background: var(--negro);
+    }
+
+    .merch-hero__bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 60%, rgba(200,169,110,0.05) 0%, transparent 60%);
+    }
+
+    .merch-hero__texto-deco {
+      position: absolute;
+      bottom: -4rem;
+      right: -2rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20vw;
+      color: var(--acero);
+      opacity: 0.08;
+      line-height: 1;
+      user-select: none;
+      letter-spacing: -0.05em;
+    }
+
+    .merch-hero__inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .prendas {
+      padding: 8rem 0;
+      background: var(--negro);
+    }
+
+    .prendas__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--acero);
+      margin-bottom: 4rem;
+    }
+
+    .prenda {
+      background: var(--negro);
+      aspect-ratio: 0.9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+      transition: background 0.4s;
+    }
+
+    .prenda:hover {
+      background: var(--carbon);
+    }
+
+    .prenda__mock {
+      width: 120px;
+      height: 120px;
+      background: var(--forja);
+      border: 1px solid var(--acero);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      opacity: 0.4;
+      transition: opacity 0.3s;
+      position: relative;
+    }
+
+    .prenda:hover .prenda__mock {
+      opacity: 0.6;
+    }
+
+    .prenda__mock-texto {
+      position: absolute;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.5rem;
+      letter-spacing: 0.15em;
+      color: var(--dorado);
+      bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+
+    .prenda__nombre {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gris-claro);
+    }
+
+    .prenda__precio {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      color: var(--gris-medio);
+    }
+
+    .prenda__overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .prenda:hover .prenda__overlay {
+      opacity: 1;
+    }
+
+    .prenda__overlay-tag {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--dorado);
+      border: 1px solid var(--dorado);
+      padding: 0.5rem 1.2rem;
+    }
+
+    .frases-merch {
+      padding: 8rem 0;
+      background: var(--carbon);
+    }
+
+    .frases-merch__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--acero);
+    }
+
+    .frase-item {
+      background: var(--carbon);
+      padding: 3rem;
+      transition: background 0.3s;
+    }
+
+    .frase-item:hover {
+      background: var(--negro);
+    }
+
+    .frase-item__texto {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      line-height: 1.1;
+      color: var(--blanco);
+      margin-bottom: 1rem;
+    }
+
+    .frase-item__sub {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--dorado);
+    }
+
+    .merch-notif {
+      padding: 8rem 0;
+      background: var(--negro);
+    }
+
+    .merch-notif__inner {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    @media (max-width: 900px) {
+      .prendas__grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .frases-merch__grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <section class="merch-hero">
+    <div class="merch-hero__bg"></div>
+    <div class="merch-hero__texto-deco" aria-hidden="true">FORJA</div>
+    <div class="container">
+      <div class="merch-hero__inner">
+        <span class="etiqueta" style="animation: fadeInUp 0.6s ease both;">La Forja en tu piel</span>
+        <div class="separador separador--centro" style="animation: fadeInUp 0.6s 0.1s ease both;"></div>
+        <h1 style="animation: fadeInUp 0.6s 0.15s ease both;">
+          La doctrina<br>no es solo texto.
+        </h1>
+        <p style="max-width:500px; margin: 1.5rem auto 2.5rem; animation: fadeInUp 0.6s 0.2s ease both;">
+          Es una postura. Pronto — prendas y accesorios forjados con el mismo lenguaje que el canal. Sin logos vacíos. Con frases que cortan.
+        </p>
+        <a href="#notificar" class="btn btn--primario" style="animation: fadeInUp 0.6s 0.25s ease both;">
+          AVÍSAME CUANDO LANCE
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="prendas">
+    <div class="container">
+      <div style="margin-bottom: 4rem; text-align:center;">
+        <span class="etiqueta reveal">Lo que viene</span>
+        <div class="separador separador--centro reveal"></div>
+        <h2 class="reveal">Primeras piezas.<br><span class="dorado">En producción.</span></h2>
+      </div>
+      <div class="prendas__grid reveal">
+        <div class="prenda">
+          <div class="prenda__mock">
+            👕
+            <span class="prenda__mock-texto">D.E.A</span>
+          </div>
+          <div class="prenda__nombre">Camiseta Oversize</div>
+          <div class="prenda__precio">— USD</div>
+          <div class="prenda__overlay">
+            <span class="prenda__overlay-tag">Próximamente</span>
+          </div>
+        </div>
+        <div class="prenda">
+          <div class="prenda__mock">
+            🧥
+            <span class="prenda__mock-texto">D.E.A</span>
+          </div>
+          <div class="prenda__nombre">Hoodie</div>
+          <div class="prenda__precio">— USD</div>
+          <div class="prenda__overlay">
+            <span class="prenda__overlay-tag">Próximamente</span>
+          </div>
+        </div>
+        <div class="prenda">
+          <div class="prenda__mock">
+            🧢
+            <span class="prenda__mock-texto">D.E.A</span>
+          </div>
+          <div class="prenda__nombre">Gorra Snapback</div>
+          <div class="prenda__precio">— USD</div>
+          <div class="prenda__overlay">
+            <span class="prenda__overlay-tag">Próximamente</span>
+          </div>
+        </div>
+        <div class="prenda">
+          <div class="prenda__mock">
+            📓
+            <span class="prenda__mock-texto">D.E.A</span>
+          </div>
+          <div class="prenda__nombre">Libreta de Forja</div>
+          <div class="prenda__precio">— USD</div>
+          <div class="prenda__overlay">
+            <span class="prenda__overlay-tag">Próximamente</span>
+          </div>
+        </div>
+        <div class="prenda">
+          <div class="prenda__mock">
+            ⚔️
+            <span class="prenda__mock-texto">D.E.A</span>
+          </div>
+          <div class="prenda__nombre">Parche Bordado</div>
+          <div class="prenda__precio">— USD</div>
+          <div class="prenda__overlay">
+            <span class="prenda__overlay-tag">Próximamente</span>
+          </div>
+        </div>
+        <div class="prenda">
+          <div class="prenda__mock">
+            🫖
+            <span class="prenda__mock-texto">D.E.A</span>
+          </div>
+          <div class="prenda__nombre">Taza de Acero</div>
+          <div class="prenda__precio">— USD</div>
+          <div class="prenda__overlay">
+            <span class="prenda__overlay-tag">Próximamente</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="frases-merch">
+    <div class="container">
+      <div style="margin-bottom: 4rem;">
+        <span class="etiqueta reveal">Las frases que llevarás</span>
+        <div class="separador reveal"></div>
+        <h2 class="reveal">Doctrina estampada.</h2>
+      </div>
+      <div class="frases-merch__grid">
+        <div class="frase-item reveal">
+          <div class="frase-item__texto">"Forjado,<br>no nacido."</div>
+          <div class="frase-item__sub">Camiseta — colección inicial</div>
+        </div>
+        <div class="frase-item reveal">
+          <div class="frase-item__texto">"El silencio<br>también cobra."</div>
+          <div class="frase-item__sub">Hoodie — colección inicial</div>
+        </div>
+        <div class="frase-item reveal">
+          <div class="frase-item__texto">"No consuela.<br>Diagnostica."</div>
+          <div class="frase-item__sub">Gorra — colección inicial</div>
+        </div>
+        <div class="frase-item reveal">
+          <div class="frase-item__texto">"El acero no<br>se oxida con orgullo."</div>
+          <div class="frase-item__sub">Libreta — edición especial</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="merch-notif" id="notificar">
+    <div class="container">
+      <div class="merch-notif__inner reveal">
+        <span class="etiqueta">Lista de espera</span>
+        <div class="separador separador--centro"></div>
+        <h2>Sé el primero.<br><span class="dorado">Precio de fundador.</span></h2>
+        <p style="margin-top: 1rem;">
+          Los primeros 50 de la lista acceden a precio de fundador — por debajo del precio público. Deja tu correo.
+        </p>
+        <LeadCaptureForm 
+          fuente="pagina_merch" 
+          ctaTexto="QUIERO SER FUNDADOR"
+          placeholderEmail="tu@correo.com"
+        />
+        <p style="font-size: 0.75rem; color: var(--gris-medio); margin-top: 1rem; font-family: 'Barlow Condensed', sans-serif; letter-spacing: 0.05em;">
+          Sin spam. Solo el aviso de lanzamiento.
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

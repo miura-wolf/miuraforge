@@ -1,0 +1,134 @@
+---
+// Componente de captura de leads conectado a Google Sheets
+interface Props {
+  fuente: string;
+  ctaTexto?: string;
+  placeholderEmail?: string;
+  placeholderNombre?: string;
+  mostrarNombre?: boolean;
+  redirectUrl?: string;
+}
+
+const { 
+  fuente, 
+  ctaTexto = 'AVÍSAME', 
+  placeholderEmail = 'tu@correo.com',
+  placeholderNombre = 'Tu nombre',
+  mostrarNombre = false,
+  redirectUrl = '/confirmacion'
+} = Astro.props;
+
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwgVox-b6T_P_79pjx0Q9zUGAqYk_p7a_uZFaz2alCdHU-ULc3gaRCs_OMBA2LfBzzm/exec';
+---
+
+<form class="lead-form" data-fuente={fuente} data-redirect={redirectUrl} data-apps-script-url={APPS_SCRIPT_URL}>
+  <div class="lead-form__row">
+    {mostrarNombre && (
+      <input 
+        type="text" 
+        name="nombre" 
+        placeholder={placeholderNombre}
+        class="lead-form__input"
+      />
+    )}
+    <input 
+      type="email" 
+      name="email" 
+      placeholder={placeholderEmail}
+      required
+      class="lead-form__input lead-form__input--email"
+    />
+    <button type="submit" class="btn btn--primario lead-form__btn">
+      {ctaTexto}
+    </button>
+  </div>
+  <p class="lead-form__aviso">Sin spam. Solo lo esencial.</p>
+</form>
+
+<script>
+  document.querySelectorAll('.lead-form').forEach(form => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const fuente = form.dataset.fuente;
+      const redirectUrl = form.dataset.redirect;
+      const APPS_SCRIPT_URL = form.dataset.appsScriptUrl;
+      const btn = form.querySelector('button');
+      const emailInput = form.querySelector('input[type="email"]');
+      const nombreInput = form.querySelector('input[type="text"]');
+      
+      const email = emailInput?.value?.trim() || '';
+      const nombre = nombreInput?.value?.trim() || '';
+      
+      if (!email || !email.includes('@')) return;
+      
+      btn.textContent = 'PROCESANDO...';
+      btn.disabled = true;
+      
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({ accion: 'capturar', nombre, email, fuente })
+        });
+      } catch (err) {
+        console.warn('[Leads] Error:', err);
+      }
+      
+      // Redirigir a confirmación
+      const params = new URLSearchParams({ nombre, email, url: APPS_SCRIPT_URL });
+      window.location.href = `${redirectUrl}?${params.toString()}`;
+    });
+  });
+</script>
+
+<style>
+  .lead-form__row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .lead-form__input {
+    flex: 1;
+    min-width: 200px;
+    background: var(--forja);
+    border: 1px solid var(--acero);
+    color: var(--blanco);
+    padding: 1rem 1.2rem;
+    font-family: var(--fuente-cuerpo);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  
+  .lead-form__input:focus {
+    border-color: var(--dorado);
+  }
+  
+  .lead-form__input::placeholder {
+    color: var(--gris-medio);
+  }
+  
+  .lead-form__btn {
+    white-space: nowrap;
+  }
+  
+  .lead-form__aviso {
+    font-size: 0.75rem;
+    color: var(--gris-medio);
+    margin-top: 0.75rem;
+    font-family: var(--fuente-etiq);
+    letter-spacing: 0.05em;
+  }
+  
+  @media (max-width: 768px) {
+    .lead-form__row {
+      flex-direction: column;
+    }
+    
+    .lead-form__input {
+      width: 100%;
+    }
+  }
+</style>

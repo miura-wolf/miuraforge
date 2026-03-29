@@ -1,0 +1,292 @@
+---
+// Nosotros — La Doctrina
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="Sobre la Doctrina — Disciplina en Acero"
+  description="No humilla. No consuela. Diagnostica. Revela, diagnostica y ordena."
+>
+  <style>
+    .page-hero {
+      min-height: 50vh;
+      display: flex;
+      align-items: flex-end;
+      padding: 8rem 0 4rem;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, var(--negro) 0%, var(--carbon) 100%);
+    }
+
+    .page-hero__deco {
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 50%;
+      background: radial-gradient(ellipse at right, rgba(200,169,110,0.04), transparent 70%);
+    }
+
+    .page-hero__numero {
+      position: absolute;
+      right: 2rem;
+      bottom: -2rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18rem;
+      color: var(--acero);
+      opacity: 0.2;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .manifiesto {
+      padding: 8rem 0;
+      background: var(--negro);
+    }
+
+    .manifiesto__bloque {
+      border-left: 1px solid var(--dorado);
+      padding: 2rem 0 2rem 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .manifiesto__bloque p {
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      color: var(--blanco);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    .manifiesto__bloque p em {
+      color: var(--dorado);
+      font-style: normal;
+    }
+
+    .dolores {
+      padding: 8rem 0;
+      background: var(--carbon);
+    }
+
+    .dolores__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--acero);
+    }
+
+    .dolor__item {
+      background: var(--carbon);
+      padding: 3rem;
+      transition: background 0.3s;
+    }
+
+    .dolor__item:hover {
+      background: var(--forja);
+    }
+
+    .dolor__num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      color: var(--rojo-forja);
+      line-height: 1;
+      margin-bottom: 1rem;
+      transition: color 0.3s;
+    }
+
+    .dolor__item:hover .dolor__num {
+      color: var(--dorado);
+    }
+
+    .dolor__item h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .voz {
+      padding: 8rem 0;
+      background: var(--negro);
+    }
+
+    .voz__cita {
+      border: 1px solid var(--acero);
+      padding: 4rem;
+      position: relative;
+    }
+
+    .voz__cita::before {
+      content: '"';
+      position: absolute;
+      top: -1rem;
+      left: 3rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 6rem;
+      color: var(--dorado);
+      line-height: 1;
+    }
+
+    .voz__cita p {
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      color: var(--blanco);
+      font-weight: 300;
+      line-height: 1.5;
+      margin-bottom: 2rem;
+    }
+
+    .voz__firma {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: var(--dorado);
+    }
+
+    .btn {
+      display: inline-block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 1rem 2rem;
+      border: 1px solid var(--dorado);
+      text-decoration: none;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn--primario {
+      background: var(--dorado);
+      color: var(--negro);
+    }
+
+    .btn--primario:hover {
+      background: transparent;
+      color: var(--dorado);
+    }
+
+    @media (max-width: 900px) {
+      .dolores__grid {
+        grid-template-columns: 1fr;
+      }
+
+      .page-hero__numero {
+        display: none;
+      }
+    }
+  </style>
+
+  <section class="page-hero">
+    <div class="page-hero__deco"></div>
+    <div class="page-hero__numero" aria-hidden="true">⚔</div>
+    <div class="container">
+      <span class="etiqueta reveal">La Doctrina</span>
+      <div class="separador reveal"></div>
+      <h1 class="reveal">
+        No humilla.<br>No consuela.<br><span class="dorado">Diagnostica.</span>
+      </h1>
+    </div>
+  </section>
+
+  <section class="manifiesto">
+    <div class="container--narrow">
+      <div class="manifiesto__bloque reveal">
+        <p>Hay un tipo de contenido que le dice al hombre lo que quiere escuchar. Le dice que no es su culpa. Que el sistema está roto. Que merece más. Que solo necesita creer en sí mismo.</p>
+      </div>
+      <div class="manifiesto__bloque reveal">
+        <p><em>Disciplina en Acero no hace eso.</em></p>
+      </div>
+      <div class="manifiesto__bloque reveal">
+        <p>No porque seamos crueles. Sino porque el consuelo que no diagnostica no construye nada. Solo pospone. Y el hombre que lleva años posponiendo ya sabe el precio que cobra eso.</p>
+      </div>
+      <div class="manifiesto__bloque reveal">
+        <p>Operamos bajo una ley de tres actos: <em>Revelar</em> lo que existe pero no tiene nombre. <em>Diagnosticar</em> el mecanismo exacto que lo produce. <em>Ordenar</em> la acción concreta que lo interrumpe.</p>
+      </div>
+      <div class="manifiesto__bloque reveal">
+        <p>Sin dramatización. Sin validación vacía. Sin pasos de 47 puntos que nadie ejecuta. Solo el diagnóstico preciso y el primer movimiento posible.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="dolores">
+    <div class="container">
+      <div style="margin-bottom: 4rem;">
+        <span class="etiqueta reveal">Los 12 Dolores Estructurales</span>
+        <div class="separador reveal"></div>
+        <h2 class="reveal">Lo que el motor detecta.<br><span class="dorado">Lo que el hombre carga.</span></h2>
+      </div>
+      <div class="dolores__grid">
+        <div class="dolor__item reveal">
+          <div class="dolor__num">01</div>
+          <h3>Propósito Perdido</h3>
+          <p>Vacío sin nombre. Ausencia de dirección que se confunde con cansancio.</p>
+        </div>
+        <div class="dolor__item reveal">
+          <div class="dolor__num">02</div>
+          <h3>Falta de Disciplina</h3>
+          <p>La voluntad que cede. El ciclo que se reinicia. El hombre que se conoce demasiado bien.</p>
+        </div>
+        <div class="dolor__item reveal">
+          <div class="dolor__num">03</div>
+          <h3>Dopamina Secuestrada</h3>
+          <p>El sistema de recompensa que ya no responde a lo que construye. Solo a lo que escapa.</p>
+        </div>
+        <div class="dolor__item reveal">
+          <div class="dolor__num">04</div>
+          <h3>Soledad Estructural</h3>
+          <p>No la soledad del soltero. La del hombre rodeado de gente que no lo conoce.</p>
+        </div>
+        <div class="dolor__item reveal">
+          <div class="dolor__num">05</div>
+          <h3>Relaciones que Drenan</h3>
+          <p>El vínculo que exige más de lo que devuelve. La identidad que se pierde en el proceso de sostener.</p>
+        </div>
+        <div class="dolor__item reveal">
+          <div class="dolor__num">06</div>
+          <h3>Identidad Perdida</h3>
+          <p>¿Quién eres cuando no estás siendo útil para alguien? La pregunta que la mayoría evita.</p>
+        </div>
+        <div class="dolor__item reveal">
+          <div class="dolor__num">07</div>
+          <h3>Vergüenza y Fracaso</h3>
+          <p>El error que se convierte en identidad. La humillación que se instala como creencia.</p>
+        </div>
+        <div class="dolor__item reveal">
+          <div class="dolor__num">08</div>
+          <h3>Inestabilidad Económica</h3>
+          <p>El peso de no llegar. La vergüenza silenciosa del hombre que no puede sostener lo que prometió.</p>
+        </div>
+        <div class="dolor__item reveal">
+          <div class="dolor__num">09</div>
+          <h3>Vacío Espiritual</h3>
+          <p>La ausencia de trascendencia. El hombre que produce pero no cree en nada que lo exceda.</p>
+        </div>
+        <div class="dolor__item reveal">
+          <div class="dolor__num">10</div>
+          <h3>Falta de Respeto</h3>
+          <p>El ignorado. El que cede siempre. El que construyó su valor en la validación externa.</p>
+        </div>
+        <div class="dolor__item reveal">
+          <div class="dolor__num">11</div>
+          <h3>Miedo al Futuro</h3>
+          <p>La parálisis frente a lo que viene. El hombre que mira hacia adelante y ve solo amenaza.</p>
+        </div>
+        <div class="dolor__item reveal">
+          <div class="dolor__num">12</div>
+          <h3>Parálisis por Análisis</h3>
+          <p>El que sabe todo y hace nada. El conocimiento que se convierte en escudo contra la acción.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="voz">
+    <div class="container--narrow">
+      <div class="voz__cita reveal">
+        <p>El acero no se oxida con orgullo. Se templa con trabajo implacable. La forja no pregunta si estás listo — solo aplica la presión necesaria y espera.</p>
+        <span class="voz__firma">— Doctrina Disciplina en Acero</span>
+      </div>
+      <div style="text-align:center; margin-top: 4rem;" class="reveal">
+        <a href="/fundamento" class="btn btn--primario">Empieza con el Fundamento</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
