@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acceso Concedido — Disciplina en Acero</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
+  <style>
+    body { display: flex; flex-direction: column; min-height: 100vh; }
+
+    .confirmacion {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .confirmacion__bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 40%, rgba(200,169,110,0.06) 0%, transparent 60%),
+        linear-gradient(180deg, var(--negro) 0%, var(--carbon) 100%);
+    }
+    .confirmacion__inner {
+      position: relative; z-index: 1;
+      max-width: 640px;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* Ícono de acceso */
+    .confirmacion__sello {
+      width: 80px; height: 80px;
+      border: 1px solid var(--dorado);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 2rem;
+      font-size: 2rem;
+      animation: fadeInUp 0.6s ease both;
+    }
+
+    .confirmacion__titulo {
+      animation: fadeInUp 0.6s 0.1s ease both;
+      margin-bottom: 0.5rem;
+    }
+    .confirmacion__sub {
+      animation: fadeInUp 0.6s 0.15s ease both;
+      margin-bottom: 3rem;
+      font-size: 1rem;
+    }
+
+    /* Separador */
+    .confirmacion__divider {
+      border: none;
+      border-top: 1px solid var(--acero);
+      margin: 3rem 0;
+      animation: fadeInUp 0.6s 0.2s ease both;
+    }
+
+    /* Pregunta de motivación */
+    .motivo-bloque {
+      background: var(--forja);
+      border: 1px solid var(--acero);
+      padding: 2.5rem;
+      text-align: left;
+      animation: fadeInUp 0.6s 0.25s ease both;
+    }
+    .motivo-bloque__label {
+      font-family: var(--fuente-etiq);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--dorado);
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .motivo-bloque h3 {
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+    }
+    .motivo-bloque p {
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+    .motivo-bloque textarea {
+      width: 100%;
+      background: var(--acero);
+      border: 1px solid var(--gris-medio);
+      color: var(--blanco);
+      padding: 1rem 1.2rem;
+      font-family: var(--fuente-cuerpo);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      resize: vertical;
+      min-height: 100px;
+      outline: none;
+      transition: border-color 0.2s;
+      margin-bottom: 1rem;
+    }
+    .motivo-bloque textarea:focus { border-color: var(--dorado); }
+    .motivo-bloque textarea::placeholder { color: var(--gris-medio); }
+
+    .motivo-bloque__aviso {
+      font-family: var(--fuente-etiq);
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      color: var(--gris-medio);
+      margin-top: 0.75rem;
+    }
+
+    /* Estado enviado */
+    .motivo-enviado {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+    }
+    .motivo-enviado .etiqueta { margin-bottom: 1rem; display: block; }
+    .motivo-enviado p { font-size: 0.95rem; }
+
+    /* Siguiente paso */
+    .siguiente-paso {
+      margin-top: 3rem;
+      animation: fadeInUp 0.6s 0.35s ease both;
+    }
+    .siguiente-paso p {
+      font-size: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="../index.html" class="nav__logo">DISCIPLINA <span>EN ACERO</span></a>
+    <ul class="nav__links">
+      <li><a href="../index.html#doctrina">Doctrina</a></li>
+      <li><a href="about.html">Nosotros</a></li>
+      <li><a href="ebook.html">El Libro</a></li>
+      <li><a href="merch.html">Merch</a></li>
+    </ul>
+    <div class="nav__hamburger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <section class="confirmacion">
+    <div class="confirmacion__bg"></div>
+    <div class="confirmacion__inner">
+
+      <div class="confirmacion__sello">⚔</div>
+
+      <h1 class="confirmacion__titulo">
+        Acceso <span class="dorado">Concedido.</span>
+      </h1>
+      <p class="confirmacion__sub">
+        <span id="nombre-saludo"></span>El Fundamento está en camino a tu correo.
+        Revisa tu bandeja — incluyendo spam.
+      </p>
+
+      <hr class="confirmacion__divider">
+
+      <!-- Pregunta de motivación -->
+      <div class="motivo-bloque" id="bloque-motivo">
+        <span class="motivo-bloque__label">Una sola pregunta</span>
+        <h3>¿Qué te trajo aquí?</h3>
+        <p>No hay respuesta correcta. Solo una línea honesta de tu parte.</p>
+        <textarea
+          id="textarea-motivo"
+          placeholder="Llevo tiempo sintiéndome paralizado / Vi un video que me golpeó / No sé bien, pero algo no cuadra..."
+          maxlength="500"
+        ></textarea>
+        <button
+          class="btn btn--primario"
+          style="width: 100%;"
+          onclick="enviarMotivo()"
+          id="btn-motivo"
+        >
+          ENVIAR Y RECIBIR MI ACCESO
+        </button>
+        <p class="motivo-bloque__aviso">
+          Tu respuesta es privada. No se publica. Nos ayuda a entender mejor a quién le hablamos.
+        </p>
+      </div>
+
+      <!-- Estado tras envío -->
+      <div class="motivo-enviado" id="motivo-enviado">
+        <span class="etiqueta">Recibido</span>
+        <p>Gracias. Eso es exactamente el tipo de honestidad que necesita este proyecto.</p>
+      </div>
+
+      <div class="siguiente-paso">
+        <p>El Fundamento ya está disponible. Descárgalo ahora.</p>
+        <a href="fundamento.html" class="btn btn--primario">⬇ DESCARGAR EL FUNDAMENTO</a>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__base" style="border-top: none; padding-top: 0;">
+        <span class="footer__copy">© 2026 Disciplina en Acero. Todos los derechos reservados.</span>
+        <span class="footer__frase">"El acero no se oxida con orgullo; se templa con trabajo implacable."</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    // ─── LEER PARAMS DE URL ─────────────────────────────────────────
+    const params         = new URLSearchParams(window.location.search);
+    const nombre         = params.get('nombre') || '';
+    const email          = params.get('email')  || '';
+    const APPS_SCRIPT_URL = params.get('url')   || 'TU_URL_DE_APPS_SCRIPT_AQUI';
+
+    // Personalizar saludo con nombre
+    if (nombre) {
+      document.getElementById('nombre-saludo').textContent = nombre + ', ';
+    }
+
+    // ─── ENVIAR MOTIVACIÓN ──────────────────────────────────────────
+    async function enviarMotivo() {
+      const motivo = document.getElementById('textarea-motivo').value.trim();
+      const btn    = document.getElementById('btn-motivo');
+
+      // Si no escribió nada, igual puede continuar
+      if (!motivo) {
+        ocultarFormMotivo();
+        return;
+      }
+
+      btn.textContent = 'ENVIANDO...';
+      btn.disabled = true;
+
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({ accion: 'motivo', email, motivacion: motivo })
+        });
+      } catch (err) {
+        console.warn('[Leads] Error registrando motivación:', err);
+      }
+
+      ocultarFormMotivo();
+    }
+
+    function ocultarFormMotivo() {
+      document.getElementById('bloque-motivo').style.display = 'none';
+      document.getElementById('motivo-enviado').style.display = 'block';
+    }
+  </script>
+</body>
+</html>

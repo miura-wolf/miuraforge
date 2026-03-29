@@ -1,6 +1,6 @@
 ---
-// src/pages/blog.astro
-// Listado de todas las reseñas — ordenadas por fecha descendente
+// src/pages/blog/index.astro
+// Listado de reseñas — estética Disciplina en Acero (dark, dorado)
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ResenaCard from '../../components/ResenaCard.astro';
@@ -9,52 +9,161 @@ const posts = (await getCollection('blog'))
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 
 const featured = posts.filter(p => p.data.featured).slice(0, 3);
-const resto    = posts.filter(p => !p.data.featured);
+const resto = posts.filter(p => !p.data.featured);
 ---
 
 <BaseLayout
   title="Biblioteca de Acero — Disciplina en Acero"
   description="Reseñas de libros de desarrollo personal, disciplina y estoicismo desde el prisma de la Disciplina en Acero. No motivación. Forja."
 >
-
-  <main class="max-w-5xl mx-auto px-6 py-16">
-
-    <!-- Header de la sección -->
-    <div class="mb-16">
-      <p class="text-red-700 uppercase tracking-widest text-sm font-semibold mb-4">
-        Biblioteca de Acero
-      </p>
-      <h1 class="text-5xl font-bold text-white mb-6">
-        Libros que no te consuelan. Te forjan.
+  <div class="hero-blog">
+    <div class="container">
+      <div class="hero__eyebrow">
+        <span class="etiqueta">Disciplina en Acero</span>
+      </div>
+      <h1 class="hero__titulo">
+        No están rotos.<br>
+        Están <em class="dorado">desorientados.</em>
       </h1>
-      <p class="text-xl text-gray-400 max-w-2xl">
-        Reseñas desde la doctrina de Disciplina en Acero. Cada libro analizado
-        bajo un único filtro: ¿te ayuda a dejar de mentirte o solo decora tu identidad rota?
+      <p class="hero__subtitulo">
+        Libros que no te consuelan. Te forjan. Reseñas desde la doctrina: 
+        ¿te ayudan a dejar de mentirte o solo decoran tu identidad rota?
       </p>
+      <div class="separador"></div>
     </div>
+  </div>
 
+  <div class="container contenido-blog">
     <!-- Destacados -->
     {featured.length > 0 && (
-      <section class="mb-16">
-        <h2 class="text-sm uppercase tracking-widest text-gray-500 mb-8 font-semibold">
-          Lecturas prioritarias
+      <section class="seccion">
+        <h2 class="seccion__titulo">
+          <span class="etiqueta">Lecturas prioritarias</span>
         </h2>
-        <div class="grid md:grid-cols-3 gap-6">
+        <div class="grid-destacados">
           {featured.map(post => <ResenaCard post={post} destacado={true} />)}
         </div>
       </section>
     )}
 
     <!-- Todas las reseñas -->
-    <section>
-      <h2 class="text-sm uppercase tracking-widest text-gray-500 mb-8 font-semibold">
-        Todas las reseñas ({posts.length})
+    <section class="seccion">
+      <h2 class="seccion__titulo">
+        <span class="etiqueta">Todas las reseñas</span>
+        <span class="contador">({posts.length})</span>
       </h2>
-      <div class="grid md:grid-cols-2 gap-6">
+      <div class="grid-reseñas">
         {posts.map(post => <ResenaCard post={post} />)}
       </div>
     </section>
-
-  </main>
-
+  </div>
 </BaseLayout>
+
+<style>
+  .hero-blog {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 6rem 0 4rem;
+    background: 
+      linear-gradient(135deg, rgba(10,10,10,0.97) 0%, rgba(26,26,26,0.95) 100%),
+      url('/images/textura-carbon.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+
+  .hero-blog::before {
+    content: '⚔';
+    position: absolute;
+    right: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20rem;
+    opacity: 0.03;
+    color: var(--dorado);
+    pointer-events: none;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .hero__eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero__eyebrow::before {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--dorado);
+  }
+
+  .hero__titulo {
+    font-size: clamp(3rem, 8vw, 6rem);
+    color: var(--blanco);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero__titulo em {
+    color: var(--dorado);
+    font-style: normal;
+  }
+
+  .hero__subtitulo {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--gris-claro);
+    max-width: 600px;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .contenido-blog {
+    padding: 4rem 2rem 6rem;
+  }
+
+  .seccion {
+    margin-bottom: 4rem;
+  }
+
+  .seccion__titulo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--acero);
+  }
+
+  .contador {
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.9rem;
+    color: var(--gris-medio);
+    font-weight: 400;
+  }
+
+  .grid-destacados {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .grid-reseñas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .grid-destacados,
+    .grid-reseñas {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

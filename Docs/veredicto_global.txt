@@ -1,0 +1,29 @@
+VEREDICTO GLOBAL
+El material existe. La idea es sólida. El esquema funciona. Pero los tres textos tienen el mismo problema de fondo: suenan a IA hablando de acero, no a acero hablando.
+
+ANÁLISIS POR MODELO
+DeepSeek-V3.2 — El mejor de los tres
+Es el más honesto intelectualmente. La distinción entre hierro y acero como metáfora del carbono-verdad es original y funciona. La frase "el libro de Clear te da el hábito de levantarte a las 5 AM — El Hombre que Dejó de Mentirse te da la razón inquebrantable para hacerlo" es exactamente el tipo de puente que necesita cada reseña. Eso es copy de conversión real.
+Lo que le falta: el remate. El texto se corta justo cuando iba a decir algo definitivo. Y le sobra un nivel de abstracción en el arranque — "el progreso es una mentira que aceptas" es bueno pero genérico. Necesita un gancho más específico y más humano en la primera línea.
+Mistral-Large-3 — El más agresivo, el más cerca del ADN del canal
+El tono percusivo está ahí. Las tres preguntas en cursiva de la Fase 2 son lo mejor del documento — eso sí tiene ritmo Miura. Y la estructura de dos columnas "lo que el libro te da / lo que no te da" es limpia y escaneable para blog.
+El problema es que se pasa. "Cobarde disfrazado de estratega", "masturbación existencial" — el canal habla duro pero no insulta. Disciplina en Acero diagnostica, no destruye. Un lector que llega buscando Atomic Habits y se encuentra que lo llaman cobarde cierra la pestaña. Hay que bajar dos grados la agresión sin perder el filo.
+Gemma-3 — El más débil de los tres
+Tiene un error estratégico grave que hay que nombrar sin rodeos: en el párrafo de "La Forja Real" dice literalmente que El Hombre que Dejó de Mentirse "requiere un complemento" y que Atomic Habits puede ser útil después de leerlo. Eso invierte el embudo. El lector concluye que necesita los dos libros en paralelo, no que tu libro es el siguiente paso. Ese párrafo sabotea la conversión.
+Además tiene el tono más genérico de los tres — frases como "busca la excelencia, no la eficiencia" podrían estar en cualquier blog de motivación de 2015.
+
+LO QUE FALTA EN LOS TRES
+Primero — La voz del Soberano.
+Ninguno de los tres textos suena a ti. Suenan a prompts bien ejecutados. Para que el blog de disciplinaenacero.com construya autoridad real, cada reseña necesita al menos un párrafo en primera persona que ancle la experiencia del autor. No autobiografía — una verdad específica. Algo como: "Leí Atomic Habits en el peor momento de mi vida y apliqué cada sistema al pie de la letra. Los hábitos funcionaron. El vacío no desapareció." Una sola línea así vale más que tres párrafos de análisis abstracto.
+Segundo — El gancho de apertura necesita un hecho concreto.
+Los tres arrancan con declaraciones filosóficas. Para SEO y para retención, el primer párrafo necesita algo que ancle al lector en una realidad específica. Ejemplo: "Atomic Habits vendió 15 millones de copias. Si el método funcionara por sí solo, habría 15 millones de hombres transformados. Tú y yo sabemos que no es así." Eso abre con tensión real, no con metáfora.
+Tercero — El CTA final es inexistente o débil.
+Ninguno de los tres cierra con una acción clara. El lector termina el artículo y no sabe qué hacer. El remate de cada reseña debe tener exactamente esto en orden: enlace de afiliado de Amazon para el libro reseñado, una línea de transición hacia tu libro, y el enlace a la descarga o compra de El Hombre que Dejó de Mentirse. Sin eso el embudo no cierra.
+
+LA VERSIÓN QUE YO CONSTRUIRÍA
+Tomaría lo mejor de los tres y lo ensamblaría así:
+Apertura — el gancho con dato concreto de Mistral, pero sin el insulto.
+Cuerpo Fase 1 — el análisis de DeepSeek sobre la identidad corrupta como punto ciego del libro. Es el más honesto y el más original.
+Cuerpo Fase 2 — las tres preguntas en cursiva de Mistral. Son el mejor momento de los tres textos.
+El puente — la frase de DeepSeek sobre las 5 AM. Ahí vive la diferencia entre los dos libros expresada en una sola imagen.
+Cierre — reescrito completamente. Voz del Soberano más CTA doble.

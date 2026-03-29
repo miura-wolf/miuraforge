@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Merch Disciplina en Acero — La doctrina en tu piel. Próximamente.">
+  <title>Merch — Disciplina en Acero</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
+  <style>
+    .merch-hero {
+      min-height: 80vh;
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      padding-top: 5rem;
+      background: var(--negro);
+    }
+    .merch-hero__bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 60%, rgba(200,169,110,0.05) 0%, transparent 60%);
+    }
+    .merch-hero__texto-deco {
+      position: absolute;
+      bottom: -4rem; right: -2rem;
+      font-family: var(--fuente-titulo);
+      font-size: 20vw;
+      color: var(--acero);
+      opacity: 0.08;
+      line-height: 1;
+      user-select: none;
+      letter-spacing: -0.05em;
+    }
+    .merch-hero__inner {
+      position: relative; z-index: 1;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    /* Cuenta regresiva visual */
+    .cuenta-regresiva {
+      padding: 6rem 0;
+      background: var(--carbon);
+    }
+    .cuenta-regresiva__inner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--acero);
+      max-width: 700px;
+      margin: 0 auto 4rem;
+    }
+    .cuenta-bloque {
+      background: var(--carbon);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+    }
+    .cuenta-bloque__num {
+      font-family: var(--fuente-titulo);
+      font-size: 3.5rem;
+      color: var(--dorado);
+      line-height: 1;
+    }
+    .cuenta-bloque__label {
+      font-family: var(--fuente-etiq);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--gris-medio);
+      text-transform: uppercase;
+      margin-top: 0.5rem;
+    }
+    /* Prendas preview */
+    .prendas { padding: 8rem 0; background: var(--negro); }
+    .prendas__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--acero);
+      margin-bottom: 4rem;
+    }
+    .prenda {
+      background: var(--negro);
+      aspect-ratio: 0.9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+      transition: background 0.4s;
+    }
+    .prenda:hover { background: var(--carbon); }
+    .prenda__mock {
+      width: 120px; height: 120px;
+      background: var(--forja);
+      border: 1px solid var(--acero);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem;
+      opacity: 0.4;
+      transition: opacity 0.3s;
+      position: relative;
+    }
+    .prenda:hover .prenda__mock { opacity: 0.6; }
+    .prenda__mock-texto {
+      position: absolute;
+      font-family: var(--fuente-titulo);
+      font-size: 0.5rem;
+      letter-spacing: 0.15em;
+      color: var(--dorado);
+      bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+    .prenda__nombre {
+      font-family: var(--fuente-etiq);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gris-claro);
+    }
+    .prenda__precio {
+      font-family: var(--fuente-titulo);
+      font-size: 1.5rem;
+      color: var(--gris-medio);
+    }
+    .prenda__overlay {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .prenda:hover .prenda__overlay { opacity: 1; }
+    .prenda__overlay-tag {
+      font-family: var(--fuente-etiq);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--dorado);
+      border: 1px solid var(--dorado);
+      padding: 0.5rem 1.2rem;
+    }
+
+    /* Frases de marca */
+    .frases-merch { padding: 8rem 0; background: var(--carbon); }
+    .frases-merch__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--acero);
+    }
+    .frase-item {
+      background: var(--carbon);
+      padding: 3rem;
+      transition: background 0.3s;
+    }
+    .frase-item:hover { background: var(--negro); }
+    .frase-item__texto {
+      font-family: var(--fuente-titulo);
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      line-height: 1.1;
+      color: var(--blanco);
+      margin-bottom: 1rem;
+    }
+    .frase-item__sub {
+      font-family: var(--fuente-etiq);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--dorado);
+    }
+
+    /* Notificación -->
+    .merch-notif { padding: 8rem 0; background: var(--negro); }
+    .merch-notif__inner {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .merch-notif__form {
+      display: flex; gap: 1rem;
+      margin-top: 2rem;
+    }
+    .merch-notif__form input {
+      flex: 1;
+      background: var(--forja);
+      border: 1px solid var(--acero);
+      color: var(--blanco);
+      padding: 1rem 1.5rem;
+      font-family: var(--fuente-cuerpo);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .merch-notif__form input:focus { border-color: var(--dorado); }
+    .merch-notif__form input::placeholder { color: var(--gris-medio); }
+
+    @media (max-width: 900px) {
+      .cuenta-regresiva__inner { grid-template-columns: 1fr 1fr; }
+      .prendas__grid { grid-template-columns: 1fr 1fr; }
+      .frases-merch__grid { grid-template-columns: 1fr; }
+      .merch-notif__form { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="../index.html" class="nav__logo">DISCIPLINA <span>EN ACERO</span></a>
+    <ul class="nav__links">
+      <li><a href="../index.html#doctrina">Doctrina</a></li>
+      <li><a href="about.html">Nosotros</a></li>
+      <li><a href="ebook.html">El Libro</a></li>
+      <li><a href="merch.html" style="color:var(--dorado)">Merch</a></li>
+    </ul>
+    <a href="../index.html#fundamento" class="nav__cta">Acceso Gratuito</a>
+    <div class="nav__hamburger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="merch-hero">
+    <div class="merch-hero__bg"></div>
+    <div class="merch-hero__texto-deco" aria-hidden="true">FORJA</div>
+    <div class="container">
+      <div class="merch-hero__inner">
+        <span class="etiqueta" style="animation: fadeInUp 0.6s ease both;">La Forja en tu piel</span>
+        <div class="separador separador--centro" style="animation: fadeInUp 0.6s 0.1s ease both;"></div>
+        <h1 style="animation: fadeInUp 0.6s 0.15s ease both;">
+          La doctrina<br>no es solo texto.
+        </h1>
+        <p style="max-width:500px; margin: 1.5rem auto 2.5rem; animation: fadeInUp 0.6s 0.2s ease both;">
+          Es una postura. Pronto — prendas y accesorios forjados con el mismo lenguaje que el canal. Sin logos vacíos. Con frases que cortan.
+        </p>
+        <a href="#notificar" class="btn btn--primario" style="animation: fadeInUp 0.6s 0.25s ease both;">
+          AVÍSAME CUANDO LANCE
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRENDAS PREVIEW -->
+  <section class="prendas">
+    <div class="container">
+      <div style="margin-bottom: 4rem; text-align:center;">
+        <span class="etiqueta reveal">Lo que viene</span>
+        <div class="separador separador--centro reveal"></div>
+        <h2 class="reveal">Primeras piezas.<br><span class="dorado">En producción.</span></h2>
+      </div>
+      <div class="prendas__grid reveal">
+        <div class="prenda">
+          <div class="prenda__mock">
+            👕
+            <span class="prenda__mock-texto">D.E.A</span>
+          </div>
+          <div class="prenda__nombre">Camiseta Oversize</div>
+          <div class="prenda__precio">— USD</div>
+          <div class="prenda__overlay">
+            <span class="prenda__overlay-tag">Próximamente</span>
+          </div>
+        </div>
+        <div class="prenda">
+          <div class="prenda__mock">
+            🧥
+            <span class="prenda__mock-texto">D.E.A</span>
+          </div>
+          <div class="prenda__nombre">Hoodie</div>
+          <div class="prenda__precio">— USD</div>
+          <div class="prenda__overlay">
+            <span class="prenda__overlay-tag">Próximamente</span>
+          </div>
+        </div>
+        <div class="prenda">
+          <div class="prenda__mock">
+            🧢
+            <span class="prenda__mock-texto">D.E.A</span>
+          </div>
+          <div class="prenda__nombre">Gorra Snapback</div>
+          <div class="prenda__precio">— USD</div>
+          <div class="prenda__overlay">
+            <span class="prenda__overlay-tag">Próximamente</span>
+          </div>
+        </div>
+        <div class="prenda">
+          <div class="prenda__mock">
+            📓
+            <span class="prenda__mock-texto">D.E.A</span>
+          </div>
+          <div class="prenda__nombre">Libreta de Forja</div>
+          <div class="prenda__precio">— USD</div>
+          <div class="prenda__overlay">
+            <span class="prenda__overlay-tag">Próximamente</span>
+          </div>
+        </div>
+        <div class="prenda">
+          <div class="prenda__mock">
+            ⚔️
+            <span class="prenda__mock-texto">D.E.A</span>
+          </div>
+          <div class="prenda__nombre">Parche Bordado</div>
+          <div class="prenda__precio">— USD</div>
+          <div class="prenda__overlay">
+            <span class="prenda__overlay-tag">Próximamente</span>
+          </div>
+        </div>
+        <div class="prenda">
+          <div class="prenda__mock">
+            🫖
+            <span class="prenda__mock-texto">D.E.A</span>
+          </div>
+          <div class="prenda__nombre">Taza de Acero</div>
+          <div class="prenda__precio">— USD</div>
+          <div class="prenda__overlay">
+            <span class="prenda__overlay-tag">Próximamente</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FRASES DE MARCA -->
+  <section class="frases-merch">
+    <div class="container">
+      <div style="margin-bottom: 4rem;">
+        <span class="etiqueta reveal">Las frases que llevarás</span>
+        <div class="separador reveal"></div>
+        <h2 class="reveal">Doctrina estampada.</h2>
+      </div>
+      <div class="frases-merch__grid">
+        <div class="frase-item reveal">
+          <div class="frase-item__texto">"Forjado,<br>no nacido."</div>
+          <div class="frase-item__sub">Camiseta — colección inicial</div>
+        </div>
+        <div class="frase-item reveal">
+          <div class="frase-item__texto">"El silencio<br>también cobra."</div>
+          <div class="frase-item__sub">Hoodie — colección inicial</div>
+        </div>
+        <div class="frase-item reveal">
+          <div class="frase-item__texto">"No consuela.<br>Diagnostica."</div>
+          <div class="frase-item__sub">Gorra — colección inicial</div>
+        </div>
+        <div class="frase-item reveal">
+          <div class="frase-item__texto">"El acero no<br>se oxida con orgullo."</div>
+          <div class="frase-item__sub">Libreta — edición especial</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOTIFICACIÓN -->
+  <section class="merch-notif" id="notificar">
+    <div class="container">
+      <div class="merch-notif__inner reveal">
+        <span class="etiqueta">Lista de espera</span>
+        <div class="separador separador--centro"></div>
+        <h2>Sé el primero.<br><span class="dorado">Precio de fundador.</span></h2>
+        <p style="margin-top: 1rem;">
+          Los primeros 50 de la lista acceden a precio de fundador — por debajo del precio público. Deja tu correo.
+        </p>
+        <div class="merch-notif__form">
+          <input type="email" id="email-merch" placeholder="tu@correo.com">
+          <button class="btn btn--primario" onclick="notificarMerch()">QUIERO SER FUNDADOR</button>
+        </div>
+        <p style="font-size: 0.75rem; color: var(--gris-medio); margin-top: 1rem; font-family: var(--fuente-etiq); letter-spacing: 0.05em;">
+          Sin spam. Solo el aviso de lanzamiento.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__marca">
+          <span class="nav__logo">DISCIPLINA <span>EN ACERO</span></span>
+          <p>Una doctrina para el hombre que sabe que algo está mal y ya no acepta respuestas vacías.</p>
+        </div>
+        <div class="footer__col">
+          <h4>Navegación</h4>
+          <ul>
+            <li><a href="../index.html">Inicio</a></li>
+            <li><a href="about.html">Doctrina</a></li>
+            <li><a href="ebook.html">El Libro</a></li>
+            <li><a href="merch.html">Merch</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="terminos.html">Términos y Condiciones</a></li>
+            <li><a href="mailto:contacto@disciplinaenacero.com">contacto@disciplinaenacero.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__base">
+        <span class="footer__copy">© 2026 Disciplina en Acero. Todos los derechos reservados.</span>
+        <span class="footer__frase">"El acero no se oxida con orgullo; se templa con trabajo implacable."</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    function notificarMerch() {
+      const email = document.getElementById('email-merch').value;
+      if (!email || !email.includes('@')) { alert('Ingresa un correo válido.'); return; }
+      const btn = event.target;
+      btn.textContent = '✓ EN LA LISTA';
+      btn.disabled = true;
+      btn.style.background = '#1A1A1A';
+      btn.style.color = '#C8A96E';
+      btn.style.border = '1px solid #C8A96E';
+    }
+  </script>
+</body>
+</html>

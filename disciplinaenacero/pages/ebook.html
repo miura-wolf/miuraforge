@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="El Hombre que Dejó de Mentirse — El diagnóstico completo. Próximamente disponible.">
+  <title>El Libro — Disciplina en Acero</title>
+  <link rel="stylesheet" href="../css/main.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>">
+  <style>
+    .libro-hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      padding-top: 5rem;
+      background: var(--negro);
+    }
+    .libro-hero__bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 80% 50%, rgba(139,26,26,0.1) 0%, transparent 55%),
+        radial-gradient(ellipse at 10% 80%, rgba(200,169,110,0.04) 0%, transparent 50%);
+    }
+    .libro-hero__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      position: relative; z-index: 1;
+    }
+    /* Portada simulada */
+    .portada {
+      display: flex; justify-content: center;
+      animation: fadeInUp 0.8s ease both;
+    }
+    .portada__libro {
+      width: 300px;
+      aspect-ratio: 0.68;
+      background: linear-gradient(145deg, #1A1A1A 0%, #0D0D0D 100%);
+      border: 1px solid #333;
+      padding: 3rem 2.5rem;
+      display: flex; flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      box-shadow:
+        25px 25px 70px rgba(0,0,0,0.8),
+        -3px 0 0 rgba(200,169,110,0.4),
+        inset 2px 0 0 rgba(255,255,255,0.03);
+      transform: perspective(900px) rotateY(-12deg) rotateX(2deg);
+      transition: transform 0.5s ease;
+    }
+    .portada__libro:hover {
+      transform: perspective(900px) rotateY(-5deg) rotateX(1deg);
+    }
+    .portada__sello {
+      position: absolute; top: -12px; right: 2rem;
+      background: var(--rojo-forja);
+      padding: 0.4rem 1rem;
+      font-family: var(--fuente-etiq);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--blanco);
+    }
+    .portada__linea-top {
+      height: 1px; background: var(--dorado); opacity: 0.4;
+    }
+    .portada__editorial {
+      font-family: var(--fuente-etiq);
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: var(--dorado);
+      text-transform: uppercase;
+    }
+    .portada__titulo {
+      font-family: var(--fuente-titulo);
+      font-size: 2.2rem;
+      line-height: 1.05;
+      color: var(--blanco);
+    }
+    .portada__yunque {
+      font-size: 3rem;
+      text-align: center;
+      opacity: 0.15;
+      margin: 0.5rem 0;
+    }
+    .portada__subtitulo {
+      font-family: var(--fuente-etiq);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--gris-claro);
+      text-transform: uppercase;
+      line-height: 1.6;
+    }
+    .portada__autor {
+      font-family: var(--fuente-etiq);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--dorado);
+      text-transform: uppercase;
+    }
+    .portada__linea-bot { height: 1px; background: var(--dorado); opacity: 0.4; }
+
+    /* Contenido derecho */
+    .libro-info { animation: fadeInUp 0.8s 0.15s ease both; }
+    .libro-info .separador { margin: 1.5rem 0; }
+    .libro-info p { margin-bottom: 1.5rem; }
+
+    .libro-datos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--acero);
+      margin: 2.5rem 0;
+    }
+    .libro-dato {
+      background: var(--forja);
+      padding: 1.5rem;
+    }
+    .libro-dato__num {
+      font-family: var(--fuente-titulo);
+      font-size: 2.5rem;
+      color: var(--dorado);
+      line-height: 1;
+    }
+    .libro-dato__label {
+      font-family: var(--fuente-etiq);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--gris-claro);
+      text-transform: uppercase;
+      margin-top: 0.25rem;
+    }
+
+    /* Formulario de notificación */
+    .libro-form {
+      background: var(--forja);
+      border: 1px solid var(--acero);
+      padding: 2rem;
+      margin-top: 2rem;
+    }
+    .libro-form h4 {
+      font-family: var(--fuente-etiq);
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--dorado);
+      margin-bottom: 1rem;
+    }
+    .libro-form__row {
+      display: flex; gap: 1rem;
+    }
+    .libro-form__row input {
+      flex: 1;
+      background: var(--acero);
+      border: 1px solid var(--gris-medio);
+      color: var(--blanco);
+      padding: 0.9rem 1.2rem;
+      font-family: var(--fuente-cuerpo);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .libro-form__row input:focus { border-color: var(--dorado); }
+    .libro-form__row input::placeholder { color: var(--gris-medio); }
+    .libro-form p {
+      font-size: 0.75rem;
+      color: var(--gris-medio);
+      margin-top: 0.75rem;
+      font-family: var(--fuente-etiq);
+      letter-spacing: 0.05em;
+    }
+
+    /* Capítulos detalle */
+    .caps-detalle { padding: 8rem 0; background: var(--carbon); }
+    .caps-detalle__lista { display: flex; flex-direction: column; gap: 1px; background: var(--acero); }
+    .cap-row {
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      align-items: center;
+      gap: 2rem;
+      background: var(--carbon);
+      padding: 2.5rem 3rem;
+      transition: background 0.3s;
+      cursor: default;
+    }
+    .cap-row:hover { background: var(--forja); }
+    .cap-row__num {
+      font-family: var(--fuente-titulo);
+      font-size: 3rem;
+      color: var(--acero);
+      line-height: 1;
+      transition: color 0.3s;
+    }
+    .cap-row:hover .cap-row__num { color: var(--dorado); }
+    .cap-row__titulo { font-family: var(--fuente-titulo); font-size: 1.6rem; margin-bottom: 0.5rem; }
+    .cap-row__desc   { font-size: 0.9rem; }
+    .cap-row__tag {
+      font-family: var(--fuente-etiq);
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.8rem;
+      border: 1px solid var(--acero);
+      color: var(--gris-medio);
+      white-space: nowrap;
+    }
+
+    /* Arquetipos */
+    .arquetipos { padding: 8rem 0; background: var(--negro); }
+    .arquetipos__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--acero);
+    }
+    .arquetipo {
+      background: var(--negro);
+      padding: 3rem 2.5rem;
+      border-top: 2px solid transparent;
+      transition: all 0.3s;
+    }
+    .arquetipo:hover { background: var(--carbon); border-top-color: var(--dorado); }
+    .arquetipo__icono { font-size: 2rem; margin-bottom: 1.5rem; opacity: 0.6; }
+    .arquetipo h3 { font-size: 1.2rem; margin-bottom: 0.75rem; }
+    .arquetipo__entrada {
+      font-family: var(--fuente-etiq);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--dorado);
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--acero);
+    }
+
+    /* Precio teaser */
+    .precio-teaser { padding: 8rem 0; background: var(--carbon); }
+    .precio-teaser__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .precio-bloque {
+      border: 1px solid var(--acero);
+      padding: 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .precio-bloque::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center bottom, rgba(200,169,110,0.05), transparent 70%);
+    }
+    .precio-bloque__etiq {
+      font-family: var(--fuente-etiq);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--dorado);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .precio-bloque__valor {
+      font-family: var(--fuente-titulo);
+      font-size: 5rem;
+      color: var(--blanco);
+      line-height: 1;
+    }
+    .precio-bloque__moneda {
+      font-family: var(--fuente-etiq);
+      font-size: 1.5rem;
+      color: var(--gris-claro);
+      vertical-align: super;
+    }
+    .precio-bloque__desc {
+      font-size: 0.85rem;
+      color: var(--gris-medio);
+      margin-top: 0.5rem;
+    }
+    .precio-bloque__sep { width: 40px; height: 1px; background: var(--dorado); margin: 1.5rem auto; }
+    .precio-bloque__incluye { list-style: none; text-align: left; }
+    .precio-bloque__incluye li {
+      display: flex; gap: 0.75rem;
+      padding: 0.6rem 0;
+      font-size: 0.9rem;
+      color: var(--gris-claro);
+      border-bottom: 1px solid var(--acero);
+    }
+    .precio-bloque__incluye li::before { content: '✓'; color: var(--dorado); }
+
+    @media (max-width: 900px) {
+      .libro-hero__grid  { grid-template-columns: 1fr; }
+      .portada           { display: none; }
+      .libro-form__row   { flex-direction: column; }
+      .cap-row           { grid-template-columns: 60px 1fr; }
+      .cap-row__tag      { display: none; }
+      .arquetipos__grid  { grid-template-columns: 1fr; }
+      .precio-teaser__inner { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="../index.html" class="nav__logo">DISCIPLINA <span>EN ACERO</span></a>
+    <ul class="nav__links">
+      <li><a href="../index.html#doctrina">Doctrina</a></li>
+      <li><a href="about.html">Nosotros</a></li>
+      <li><a href="ebook.html" style="color:var(--dorado)">El Libro</a></li>
+      <li><a href="merch.html">Merch</a></li>
+    </ul>
+    <a href="../index.html#fundamento" class="nav__cta">Acceso Gratuito</a>
+    <div class="nav__hamburger"><span></span><span></span><span></span></div>
+  </nav>
+
+  <!-- HERO LIBRO -->
+  <section class="libro-hero">
+    <div class="libro-hero__bg"></div>
+    <div class="container">
+      <div class="libro-hero__grid">
+
+        <!-- Portada simulada -->
+        <div class="portada">
+          <div class="portada__libro">
+            <div class="portada__sello">Próximamente</div>
+            <div>
+              <div class="portada__linea-top"></div>
+              <br>
+              <div class="portada__editorial">Disciplina en Acero</div>
+            </div>
+            <div>
+              <div class="portada__titulo">El Hombre<br>que Dejó<br>de Mentirse</div>
+              <div class="portada__yunque">⚒</div>
+              <div class="portada__subtitulo">Cinco capítulos.<br>Cuatro dolores.<br>Una sola dirección.</div>
+            </div>
+            <div>
+              <div class="portada__autor">Andrés Sánchez</div>
+              <br>
+              <div class="portada__linea-bot"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Info + Form -->
+        <div class="libro-info">
+          <span class="etiqueta">El Libro</span>
+          <div class="separador"></div>
+          <h1 style="font-size: clamp(2.5rem, 5vw, 4.5rem);">
+            El Hombre que<br><span class="dorado">Dejó de Mentirse</span>
+          </h1>
+          <p style="margin-top: 1.5rem;">
+            No es un libro de autoayuda. No te va a decir que creas en ti mismo. Te va a decir exactamente qué mecanismo te tiene paralizado y qué secuencia lo interrumpe.
+          </p>
+
+          <div class="libro-datos">
+            <div class="libro-dato">
+              <div class="libro-dato__num">101</div>
+              <div class="libro-dato__label">Páginas</div>
+            </div>
+            <div class="libro-dato">
+              <div class="libro-dato__num">05</div>
+              <div class="libro-dato__label">Capítulos</div>
+            </div>
+            <div class="libro-dato">
+              <div class="libro-dato__num">04</div>
+              <div class="libro-dato__label">Dolores</div>
+            </div>
+            <div class="libro-dato">
+              <div class="libro-dato__num">01</div>
+              <div class="libro-dato__label">Dirección</div>
+            </div>
+          </div>
+
+          <div class="libro-form">
+            <h4>⚔ Quiero ser notificado en el lanzamiento</h4>
+            <div class="libro-form__row">
+              <input type="email" placeholder="tu@correo.com" id="email-libro">
+              <button class="btn btn--primario" onclick="notificarme()">AVÍSAME</button>
+            </div>
+            <p>Precio de lanzamiento solo para los primeros. Sin spam.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPÍTULOS DETALLE -->
+  <section class="caps-detalle">
+    <div class="container">
+      <div style="margin-bottom: 4rem;">
+        <span class="etiqueta reveal">El Contenido</span>
+        <div class="separador reveal"></div>
+        <h2 class="reveal">Lo que encontrarás<br><span class="dorado">adentro.</span></h2>
+      </div>
+      <div class="caps-detalle__lista reveal">
+        <div class="cap-row">
+          <div class="cap-row__num">I</div>
+          <div>
+            <div class="cap-row__titulo">El Silencio que te Está Matando</div>
+            <p class="cap-row__desc">Lo que el silencio acumula y lo que cobra. Los tres precios que nadie te dijo que ibas a pagar por callar lo que pesa.</p>
+          </div>
+          <span class="cap-row__tag">Diagnóstico</span>
+        </div>
+        <div class="cap-row">
+          <div class="cap-row__num">II</div>
+          <div>
+            <div class="cap-row__titulo">La Máscara que Construiste para Sobrevivir</div>
+            <p class="cap-row__desc">La máscara no fue una elección — fue una solución de emergencia. El problema es que nunca te dijeron cuándo desactivarla.</p>
+          </div>
+          <span class="cap-row__tag">Identidad</span>
+        </div>
+        <div class="cap-row">
+          <div class="cap-row__num">III</div>
+          <div>
+            <div class="cap-row__titulo">El Vacío no es Depresión</div>
+            <p class="cap-row__desc">El sistema de recompensa secuestrado. Por qué el placer dejó de llegar. La diferencia entre depresión clínica y anhedonia instalada.</p>
+          </div>
+          <span class="cap-row__tag">Mecanismo</span>
+        </div>
+        <div class="cap-row">
+          <div class="cap-row__num">IV</div>
+          <div>
+            <div class="cap-row__titulo">El Precio de Ser</div>
+            <p class="cap-row__desc">La trampa del proveedor. La carga mental que nadie registra. El estándar que se mueve cada vez que crees haberlo alcanzado.</p>
+          </div>
+          <span class="cap-row__tag">Costo</span>
+        </div>
+        <div class="cap-row">
+          <div class="cap-row__num">V</div>
+          <div>
+            <div class="cap-row__titulo">Fundamento</div>
+            <p class="cap-row__desc">La arquitectura mínima que se instala primero. Lo que la consistencia produce que la intensidad nunca pudo. El primer movimiento.</p>
+          </div>
+          <span class="cap-row__tag">Acción</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARQUETIPOS -->
+  <section class="arquetipos">
+    <div class="container">
+      <div style="margin-bottom: 4rem; text-align: center;">
+        <span class="etiqueta reveal">¿Para quién es?</span>
+        <div class="separador separador--centro reveal"></div>
+        <h2 class="reveal">Tres hombres.<br><span class="dorado">Un mismo diagnóstico.</span></h2>
+      </div>
+      <div class="arquetipos__grid">
+        <div class="arquetipo reveal">
+          <div class="arquetipo__icono">📚</div>
+          <h3>El Paralizado por Maestría Teórica</h3>
+          <p>Ha leído todo. Sabe todo. Y sigue sin moverse. Su conocimiento se convirtió en el mejor escudo contra la acción.</p>
+          <div class="arquetipo__entrada">→ Empieza en el Capítulo III</div>
+        </div>
+        <div class="arquetipo reveal">
+          <div class="arquetipo__icono">🪨</div>
+          <h3>El Hombre Anestesiado</h3>
+          <p>Funciona. Trabaja. Cumple. Pero hace años que no siente que algo importe. Lo llama cansancio. Tiene otro nombre.</p>
+          <div class="arquetipo__entrada">→ Empieza en el Capítulo I</div>
+        </div>
+        <div class="arquetipo reveal">
+          <div class="arquetipo__icono">⚡</div>
+          <h3>El Guerrero Desorientado</h3>
+          <p>Tiene energía, tiene voluntad. No tiene dirección. Cada nuevo sistema que instala colapsa porque la base no está construida.</p>
+          <div class="arquetipo__entrada">→ Empieza en el Capítulo II</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRECIO TEASER -->
+  <section class="precio-teaser">
+    <div class="container">
+      <div class="precio-teaser__inner">
+        <div class="reveal">
+          <span class="etiqueta">El Precio</span>
+          <div class="separador"></div>
+          <h2>Lanzamiento.<br><span class="dorado">Precio real.<br>Sin inflado.</span></h2>
+          <p style="margin-top: 1.5rem; margin-bottom: 2rem;">
+            No habrá precio original tachado de $97. El precio de lanzamiento es el precio real para los primeros. Después sube a su valor estable.
+          </p>
+          <p>
+            Deja tu correo arriba y te avisamos en el momento que esté disponible — con el precio de lanzamiento activo.
+          </p>
+        </div>
+        <div class="precio-bloque reveal">
+          <div class="precio-bloque__etiq">Precio de Lanzamiento</div>
+          <div>
+            <span class="precio-bloque__moneda">$</span>
+            <span class="precio-bloque__valor">9</span>
+            <span class="precio-bloque__moneda">USD</span>
+          </div>
+          <div class="precio-bloque__desc">Primera semana únicamente</div>
+          <div class="precio-bloque__sep"></div>
+          <ul class="precio-bloque__incluye">
+            <li>Ebook completo — 101 páginas</li>
+            <li>Los 5 capítulos + protocolo</li>
+            <li>Acceso inmediato post-pago</li>
+            <li>Sin suscripciones. Pago único.</li>
+          </ul>
+          <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--acero); font-family: var(--fuente-etiq); font-size: 0.7rem; color: var(--gris-medio); letter-spacing: 0.1em;">
+            PRECIO ESTABLE POSTERIOR: $17 USD
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div class="footer__marca">
+          <span class="nav__logo">DISCIPLINA <span>EN ACERO</span></span>
+          <p>Una doctrina para el hombre que sabe que algo está mal y ya no acepta respuestas vacías.</p>
+        </div>
+        <div class="footer__col">
+          <h4>Navegación</h4>
+          <ul>
+            <li><a href="../index.html">Inicio</a></li>
+            <li><a href="about.html">Doctrina</a></li>
+            <li><a href="ebook.html">El Libro</a></li>
+            <li><a href="merch.html">Merch</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="terminos.html">Términos y Condiciones</a></li>
+            <li><a href="mailto:contacto@disciplinaenacero.com">contacto@disciplinaenacero.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__base">
+        <span class="footer__copy">© 2026 Disciplina en Acero. Todos los derechos reservados.</span>
+        <span class="footer__frase">"El acero no se oxida con orgullo; se templa con trabajo implacable."</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script>
+    function notificarme() {
+      const email = document.getElementById('email-libro').value;
+      if (!email || !email.includes('@')) { alert('Ingresa un correo válido.'); return; }
+      const btn = event.target;
+      btn.textContent = '✓ ANOTADO';
+      btn.disabled = true;
+      btn.style.background = '#1A1A1A';
+      btn.style.color = '#C8A96E';
+      btn.style.border = '1px solid #C8A96E';
+    }
+  </script>
+</body>
+</html>

@@ -1,8 +1,8 @@
 ---
 // src/components/ResenaCard.astro
-// Tarjeta de reseña para el listado de blog.astro
+// Tarjeta de reseña — estética Disciplina en Acero (dorado/acero)
 interface Props {
-  post:      any;
+  post: any;
   destacado?: boolean;
 }
 
@@ -11,60 +11,164 @@ const { title, description, date, category, readTime, image, tags } = post.data;
 const slug = post.id;
 
 const formattedDate = new Date(date).toLocaleDateString('es-ES', {
-  year: 'numeric', month: 'short', day: 'numeric'
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric'
 });
 ---
 
 <a
   href={`/blog/${slug}`}
   class:list={[
-    "group block bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden",
-    "hover:border-red-800 transition-all duration-300",
-    destacado ? "shadow-lg shadow-red-950/20" : ""
+    "resena-card",
+    destacado ? "resena-card--destacada" : ""
   ]}
 >
   {image && (
-    <div class="overflow-hidden aspect-video">
+    <div class="resena-card__imagen">
       <img
         src={image}
         alt={title}
-        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         loading="lazy"
       />
     </div>
   )}
 
-  <div class="p-6">
-    <div class="flex items-center gap-3 mb-4">
-      <span class="text-xs uppercase tracking-widest text-red-700 font-semibold">
+  <div class="resena-card__contenido">
+    <div class="resena-card__meta">
+      <span class="resena-card__categoria">
         {category || 'Reseña de Acero'}
       </span>
-      <span class="text-zinc-700">•</span>
-      <time class="text-xs text-zinc-500">{formattedDate}</time>
+      <span class="resena-card__separador">•</span>
+      <time class="resena-card__fecha">{formattedDate}</time>
       {readTime && (
         <>
-          <span class="text-zinc-700">•</span>
-          <span class="text-xs text-zinc-500">{readTime} min</span>
+          <span class="resena-card__separador">•</span>
+          <span class="resena-card__tiempo">{readTime} min</span>
         </>
       )}
     </div>
 
-    <h3 class="text-lg font-bold text-white mb-3 group-hover:text-red-400 transition-colors leading-snug">
-      {title}
-    </h3>
+    <h3 class="resena-card__titulo">{title}</h3>
 
-    <p class="text-sm text-gray-400 leading-relaxed line-clamp-3">
-      {description}
-    </p>
+    <p class="resena-card__descripcion">{description}</p>
 
     {tags && tags.length > 0 && (
-      <div class="mt-4 flex flex-wrap gap-2">
+      <div class="resena-card__tags">
         {tags.slice(0, 3).map((tag: string) => (
-          <span class="text-xs bg-zinc-800 text-zinc-400 px-3 py-1 rounded-full">
-            #{tag}
-          </span>
+          <span class="resena-card__tag">#{tag}</span>
         ))}
       </div>
     )}
   </div>
 </a>
+
+<style>
+  .resena-card {
+    display: block;
+    background: var(--carbon);
+    border: 1px solid var(--acero);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .resena-card:hover {
+    border-color: var(--dorado);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(200, 169, 110, 0.1);
+  }
+
+  .resena-card--destacada {
+    border-color: var(--dorado);
+    box-shadow: 0 0 20px rgba(200, 169, 110, 0.15);
+  }
+
+  .resena-card__imagen {
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+  }
+
+  .resena-card__imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+
+  .resena-card:hover .resena-card__imagen img {
+    transform: scale(1.05);
+  }
+
+  .resena-card__contenido {
+    padding: 1.5rem;
+  }
+
+  .resena-card__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .resena-card__categoria {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--dorado);
+    font-weight: 600;
+  }
+
+  .resena-card__separador {
+    color: var(--gris-medio);
+  }
+
+  .resena-card__fecha,
+  .resena-card__tiempo {
+    font-size: 0.75rem;
+    color: var(--gris-claro);
+  }
+
+  .resena-card__titulo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    color: var(--blanco);
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    transition: color 0.3s;
+  }
+
+  .resena-card:hover .resena-card__titulo {
+    color: var(--dorado);
+  }
+
+  .resena-card__descripcion {
+    font-size: 0.9rem;
+    color: var(--gris-claro);
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+
+  .resena-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .resena-card__tag {
+    font-size: 0.7rem;
+    color: var(--gris-medio);
+    background: var(--forja);
+    padding: 0.25rem 0.75rem;
+    border-radius: 2px;
+    text-transform: lowercase;
+  }
+</style>

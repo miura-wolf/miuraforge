@@ -1,126 +1,343 @@
 ---
 // src/layouts/BlogPostLayout.astro
-// Layout principal de cada reseña — estética Disciplina en Acero
+// Layout de reseña — estética Disciplina en Acero (dark, dorado)
 import { Image } from 'astro:assets';
 import BaseLayout from './BaseLayout.astro';
 
 const { frontmatter } = Astro.props;
-const {
-  title, description, date, readTime,
-  image, amazon_link, tags, category
-} = frontmatter;
+const { title, description, date, readTime, image, amazon_link, tags, category } = frontmatter;
 
 const formattedDate = new Date(date).toLocaleDateString('es-ES', {
-  year: 'numeric', month: 'long', day: 'numeric'
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
 });
 ---
 
 <BaseLayout title={title} description={description}>
+  <article class="resena">
+    <header class="resena__header">
+      <div class="container">
+        <div class="resena__eyebrow">
+          <span class="etiqueta">{category || 'Reseña de Acero'}</span>
+        </div>
+        
+        <h1 class="resena__titulo">{title}</h1>
+        
+        <div class="resena__meta">
+          <time datetime={date}>{formattedDate}</time>
+          {readTime && (
+            <>
+              <span class="separador-meta">•</span>
+              <span>{readTime} min de lectura</span>
+            </>
+          )}
+        </div>
 
-  <article class="max-w-3xl mx-auto px-6 py-12 prose prose-invert prose-lg">
-
-    <!-- Meta de la reseña -->
-    <div class="flex items-center gap-4 text-sm text-gray-400 mb-8 not-prose">
-      <span class="uppercase tracking-widest font-semibold text-red-700">
-        {category || 'Reseña de Acero'}
-      </span>
-      <span>•</span>
-      <time datetime={date}>{formattedDate}</time>
-      {readTime && <span>• {readTime} min de forja</span>}
-    </div>
+        {description && (
+          <p class="resena__descripcion">{description}</p>
+        )}
+      </div>
+    </header>
 
     {image && (
-      <Image
-        src={image}
-        alt={title}
-        width={800}
-        height={450}
-        class="w-full rounded-xl mb-10 shadow-2xl not-prose"
-        loading="eager"
-      />
-    )}
-
-    <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-white mb-6 not-prose">
-      {title}
-    </h1>
-
-    <!-- Descripción destacada -->
-    <div class="border-l-4 border-red-700 pl-6 mb-12 not-prose">
-      <p class="text-xl text-gray-300 italic">{description}</p>
-    </div>
-
-    <!-- Contenido Markdown generado por forge_blog.py -->
-    <slot />
-
-    <!-- CTA principal hacia el libro de Andrés -->
-    <div class="mt-16 p-8 bg-zinc-950 border border-red-900 rounded-2xl not-prose">
-      <h2 class="text-2xl font-bold mb-4 text-white">
-        El mapa no forja al hombre. El acero sí.
-      </h2>
-      <p class="text-lg text-gray-300 mb-6">
-        Este libro te da el "qué". Sin identidad de acero, sin dejar de mentirte,
-        seguirás siendo el mismo esclavo con mejores hábitos.
-      </p>
-      <a
-        href="/el-hombre-que-dejo-de-mentirse"
-        class="inline-block bg-red-700 hover:bg-red-600 text-white font-bold px-8 py-4 rounded-xl transition-all text-lg"
-      >
-        Forja tu identidad → Lee "El Hombre que Dejó de Mentirse"
-      </a>
-
-      {amazon_link && (
-        <div class="mt-8 pt-8 border-t border-zinc-800">
-          <p class="text-sm text-gray-400 mb-3">
-            Apoya la forja comprando el libro reseñado:
-          </p>
-          <a
-            href={amazon_link}
-            target="_blank"
-            rel="noopener noreferrer sponsored"
-            class="text-amber-400 hover:text-amber-300 underline font-medium"
-          >
-            → Comprar en Amazon (enlace afiliado)
-          </a>
-        </div>
-      )}
-    </div>
-
-    <!-- Tags -->
-    {tags && tags.length > 0 && (
-      <div class="mt-12 flex flex-wrap gap-2 not-prose">
-        {tags.map((tag: string) => (
-          <span class="text-xs uppercase tracking-widest bg-zinc-900 px-4 py-2 rounded-full text-gray-400">
-            #{tag}
-          </span>
-        ))}
+      <div class="resena__hero-imagen">
+        <img src={image} alt={title} />
       </div>
     )}
 
-  </article>
+    <div class="resena__contenido container">
+      <div class="resena__body">
+        <slot />
+      </div>
 
+      <!-- CTA hacia el libro -->
+      <div class="resena__cta">
+        <h2>El mapa no forja al hombre. El acero sí.</h2>
+        <p>
+          Este libro te da el "qué". Sin identidad de acero, sin dejar de mentirte,
+          seguirás siendo el mismo esclavo con mejores hábitos.
+        </p>
+        <a href="/el-hombre-que-dejo-de-mentirse" class="btn-dorado">
+          Forja tu identidad → Lee "El Hombre que Dejó de Mentirse"
+        </a>
+
+        {amazon_link && (
+          <div class="resena__amazon">
+            <p>Apoya la forja comprando el libro reseñado:</p>
+            <a href={amazon_link} target="_blank" rel="noopener noreferrer sponsored" class="link-dorado">
+              → Comprar en Amazon (enlace afiliado)
+            </a>
+          </div>
+        )}
+      </div>
+
+      <!-- Tags -->
+      {tags && tags.length > 0 && (
+        <div class="resena__tags">
+          {tags.map((tag: string) => (
+            <span class="resena__tag">#{tag}</span>
+          ))}
+        </div>
+      )}
+    </div>
+  </article>
 </BaseLayout>
 
 <style>
-  /* Estilos doctrinales — el contenido generado por el Alchemist hereda esto */
-  .prose :global(h2) {
-    color: #fff;
-    border-bottom: 2px solid #7f1d1d;
+  .resena {
+    padding-bottom: 4rem;
+  }
+
+  .resena__header {
+    padding: 8rem 0 3rem;
+    text-align: center;
+    position: relative;
+  }
+
+  .resena__header::before {
+    content: '⚔';
+    position: absolute;
+    right: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 15rem;
+    opacity: 0.02;
+    color: var(--dorado);
+    pointer-events: none;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .resena__eyebrow {
+    margin-bottom: 1.5rem;
+  }
+
+  .resena__titulo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    color: var(--blanco);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.03em;
+  }
+
+  .resena__meta {
+    font-size: 0.9rem;
+    color: var(--gris-claro);
+    margin-bottom: 2rem;
+  }
+
+  .separador-meta {
+    margin: 0 0.5rem;
+    color: var(--dorado);
+  }
+
+  .resena__descripcion {
+    font-size: 1.25rem;
+    color: var(--gris-claro);
+    font-style: italic;
+    border-left: 3px solid var(--dorado);
+    padding-left: 1.5rem;
+    text-align: left;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .resena__hero-imagen {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto 3rem;
+    padding: 0 2rem;
+  }
+
+  .resena__hero-imagen img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  .resena__contenido {
+    max-width: 700px;
+  }
+
+  .resena__body {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--gris-claro);
+  }
+
+  .resena__body :global(h2) {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--blanco);
+    margin: 3rem 0 1.5rem;
     padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--acero);
+    letter-spacing: 0.02em;
   }
-  .prose :global(h3) {
-    color: #e5e7eb;
+
+  .resena__body :global(h3) {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    color: var(--dorado);
+    margin: 2rem 0 1rem;
+    letter-spacing: 0.02em;
   }
-  .prose :global(strong) {
-    color: #ef4444;
+
+  .resena__body :global(p) {
+    margin-bottom: 1.5rem;
   }
-  .prose :global(blockquote) {
-    border-left-color: #7f1d1d;
-    color: #d1d5db;
+
+  .resena__body :global(strong) {
+    color: var(--blanco);
+    font-weight: 600;
   }
-  .prose :global(a) {
-    color: #fbbf24;
+
+  .resena__body :global(em) {
+    color: var(--dorado);
   }
-  .prose :global(a:hover) {
-    color: #f59e0b;
+
+  .resena__body :global(blockquote) {
+    border-left: 3px solid var(--dorado);
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    font-style: italic;
+    color: var(--gris-claro);
+  }
+
+  .resena__body :global(a) {
+    color: var(--dorado);
+    border-bottom: 1px solid var(--dorado);
+    transition: all 0.2s;
+  }
+
+  .resena__body :global(a:hover) {
+    background: var(--dorado);
+    color: var(--negro);
+  }
+
+  .resena__body :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    font-size: 0.95rem;
+  }
+
+  .resena__body :global(th) {
+    background: var(--acero);
+    color: var(--blanco);
+    padding: 1rem;
+    text-align: left;
+    font-family: 'Barlow Condensed', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.8rem;
+  }
+
+  .resena__body :global(td) {
+    padding: 1rem;
+    border-bottom: 1px solid var(--acero);
+    color: var(--gris-claro);
+  }
+
+  .resena__body :global(tr:hover td) {
+    background: var(--carbon);
+  }
+
+  .resena__cta {
+    margin-top: 4rem;
+    padding: 3rem;
+    background: var(--carbon);
+    border: 1px solid var(--acero);
+    border-radius: 4px;
+    text-align: center;
+  }
+
+  .resena__cta h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    color: var(--blanco);
+    margin-bottom: 1rem;
+  }
+
+  .resena__cta p {
+    color: var(--gris-claro);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+  }
+
+  .btn-dorado {
+    display: inline-block;
+    background: var(--dorado);
+    color: var(--negro);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 1rem 2rem;
+    border-radius: 2px;
+    transition: all 0.3s;
+    border: 1px solid var(--dorado);
+  }
+
+  .btn-dorado:hover {
+    background: transparent;
+    color: var(--dorado);
+  }
+
+  .resena__amazon {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--acero);
+  }
+
+  .resena__amazon p {
+    font-size: 0.9rem;
+    color: var(--gris-medio);
+    margin-bottom: 0.5rem;
+  }
+
+  .link-dorado {
+    color: var(--dorado);
+    border-bottom: 1px solid var(--dorado);
+    transition: all 0.2s;
+  }
+
+  .link-dorado:hover {
+    background: var(--dorado);
+    color: var(--negro);
+  }
+
+  .resena__tags {
+    margin-top: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+
+  .resena__tag {
+    font-size: 0.75rem;
+    color: var(--gris-medio);
+    background: var(--carbon);
+    border: 1px solid var(--acero);
+    padding: 0.5rem 1rem;
+    text-transform: lowercase;
+  }
+
+  @media (max-width: 768px) {
+    .resena__header {
+      padding: 6rem 0 2rem;
+    }
+
+    .resena__cta {
+      padding: 2rem 1.5rem;
+    }
   }
 </style>
