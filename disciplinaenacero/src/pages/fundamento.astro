@@ -193,6 +193,26 @@ const GOOGLE_DRIVE_URL = 'https://drive.google.com/file/d/1uQzbifYe2FXWHOqHgUGoi
       color: var(--dorado);
     }
 
+    .fundamento-input {
+      background: var(--acero);
+      border: 1px solid var(--gris-medio);
+      color: var(--blanco);
+      padding: 1rem 1.2rem;
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+
+    .fundamento-input:focus {
+      border-color: var(--dorado);
+    }
+
+    .fundamento-input::placeholder {
+      color: var(--gris-medio);
+    }
+
     .que-sigue {
       padding: 6rem 0;
       background: var(--carbon);
@@ -400,16 +420,24 @@ const GOOGLE_DRIVE_URL = 'https://drive.google.com/file/d/1uQzbifYe2FXWHOqHgUGoi
         </ul>
 
         <div class="fundamento-cta">
-          <a
-            href={GOOGLE_DRIVE_URL}
-            class="btn btn--primario"
-            target="_blank"
-            rel="noopener"
-            id="btn-descarga"
-          >
-            ⬇ DESCARGAR EL FUNDAMENTO — GRATIS
-          </a>
-          <p class="fundamento-aviso">PDF · Acceso inmediato · Sin registro adicional</p>
+          <form id="form-fundamento" class="fundamento-form" style="display: flex; flex-direction: column; gap: 1rem;">
+            <input 
+              type="email" 
+              id="email-fundamento"
+              placeholder="tu@correo.com"
+              required
+              class="fundamento-input"
+              style="background: var(--acero); border: 1px solid var(--gris-medio); color: var(--blanco); padding: 1rem 1.2rem; font-size: 0.95rem; outline: none; transition: border-color 0.2s;"
+            />
+            <button
+              type="submit"
+              class="btn btn--primario"
+              id="btn-descarga"
+            >
+              ⬇ DESCARGAR EL FUNDAMENTO — GRATIS
+            </button>
+          </form>
+          <p class="fundamento-aviso">PDF · Acceso inmediato · Te enviamos el link por correo</p>
         </div>
 
         <div class="gmail-tip">
@@ -489,12 +517,56 @@ const GOOGLE_DRIVE_URL = 'https://drive.google.com/file/d/1uQzbifYe2FXWHOqHgUGoi
   </section>
 </BaseLayout>
 
-<script>
-  // Personalizar botón si viene con nombre en URL
+<script is:inline>
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwgVox-b6T_P_79pjx0Q9zUGAqYk_p7a_uZFaz2alCdHU-ULc3gaRCs_OMBA2LfBzzm/exec';
+  const GOOGLE_DRIVE_URL = 'https://drive.google.com/file/d/1uQzbifYe2FXWHOqHgUGoiB-gFGT0HQlG/view?usp=sharing';
+
+  // Captura de lead antes de descarga
+  const form = document.getElementById('form-fundamento');
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('email-fundamento').value.trim();
+      const btn = document.getElementById('btn-descarga');
+      
+      if (!email || !email.includes('@')) return;
+      
+      btn.textContent = 'PROCESANDO...';
+      btn.disabled = true;
+      
+      // Guardar en Sheets
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify({ 
+            accion: 'capturar', 
+            nombre: '', 
+            email, 
+            fuente: 'fundamento_directo' 
+          })
+        });
+      } catch (err) {
+        console.warn('[Leads] Error:', err);
+      }
+      
+      // Abrir PDF en nueva pestaña
+      window.open(GOOGLE_DRIVE_URL, '_blank');
+      
+      // Cambiar texto del botón
+      btn.textContent = '✓ PDF ABIERTO — REVISA TU CORREO';
+      btn.style.background = 'var(--forja)';
+      btn.style.color = 'var(--dorado)';
+      btn.style.border = '1px solid var(--dorado)';
+    });
+  }
+  
+  // Personalizar si viene con nombre
   const params = new URLSearchParams(window.location.search);
   const nombre = params.get('nombre');
-  if (nombre) {
-    const btn = document.getElementById('btn-descarga');
-    if (btn) btn.textContent = `⬇ ${nombre.toUpperCase()}, DESCARGA TU FUNDAMENTO`;
+  if (nombre && form) {
+    const input = document.getElementById('email-fundamento');
+    input.placeholder = `${nombre.toUpperCase()}, tu@correo.com`;
   }
 </script>
