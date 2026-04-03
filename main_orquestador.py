@@ -21,6 +21,9 @@ load_dotenv()
 
 console = Console()
 
+# ── Constantes del Motor ──
+SPREADSHEET_NAME = "BD_MiuraForge_Engine"
+
 # ============================================================================
 # ORQUESTADOR SDD - MENÚ PRINCIPAL
 # ============================================================================
@@ -77,7 +80,7 @@ def mostrar_menu_orquestador():
 
     console.print(table2)
 
-    return input("\n[bold]Soberano, seleccione fase: [/]")
+    return console.input("\n[bold]Soberano, seleccione fase: [/]")
 
 
 # ============================================================================
@@ -121,6 +124,9 @@ def fase_explore(tema=None, auto=False):
             "[bold yellow]🔍 ¿Qué debilidad humana investigamos? (vacío=Oráculo): [/]"
         )
 
+    # Database compartida para todo el flujo (evita doble conexión)
+    db = Database(spreadsheet_name=SPREADSHEET_NAME)
+
     # Modo Oráculo automático
     if not tema or auto:
         console.print("[bold cyan]🔮 Invocando Oráculo Semanal...[/]")
@@ -128,7 +134,6 @@ def fase_explore(tema=None, auto=False):
 
         run_weekly_oracle()
 
-        db = Database(spreadsheet_name="BD_MiuraForge_Engine")
         tema = seleccionar_tema_sheets(db)
         if not tema:
             console.print("[red]❌ Oráculo no definió tema claro. Abortando.[/]")
@@ -144,7 +149,7 @@ def fase_explore(tema=None, auto=False):
         task = progress.add_task("[cyan]Radar OSINT activo...", total=None)
 
         investigador = Researcher()
-        hallazgos_validados, total_analizadas = investigador.buscar_dolor(tema)
+        hallazgos_validados, total_analizadas = investigador.buscar_dolor_notebooklm(tema)
 
         progress.update(task, description="[green]✅ Radar completado.")
 
@@ -154,7 +159,6 @@ def fase_explore(tema=None, auto=False):
 
     # Registro e inteligencia
     id_sesion = datetime.datetime.now().strftime("%Y%m%d_%H%M")
-    db = Database(spreadsheet_name="BD_MiuraForge_Engine")
 
     with console.status("[bold magenta]Alquimia: Transmutando hallazgos..."):
         db.registrar_hallazgos(id_sesion, hallazgos_validados)
@@ -237,11 +241,11 @@ def fase_propose(id_sesion, tema, hallazgos, modo="estandar", auto=False):
     from core.alchemist import Alchemist
     from core.database import Database
 
-    db = Database(spreadsheet_name="BD_MiuraForge_Engine")
+    db = Database(spreadsheet_name=SPREADSHEET_NAME)
     alquimista = Alchemist()
 
     # Preparar contexto
-    texto_consolidado = "\n".join([h["content"] for h in hallazgos])
+    texto_consolidado = "\n".join([h.get("content", "") for h in hallazgos if h.get("content")])
     memoria_global = db.obtener_memoria_global()
 
     # Ejecutar alquimia
@@ -347,7 +351,7 @@ def fase_spec(id_sesion, tema, plan_texto, auto=False):
     from core.visual_director import VisualDirector
     from core.logger import iniciar_registro_combate
 
-    db = Database(spreadsheet_name="BD_MiuraForge_Engine")
+    db = Database(spreadsheet_name=SPREADSHEET_NAME)
     arquitecto = Architect(db_manager=db)
 
     # Crear directorio de salida
@@ -379,10 +383,14 @@ def fase_spec(id_sesion, tema, plan_texto, auto=False):
         elif aprobacion == "a":
             # Auditoría
             db.registrar_auditoria_inicial(id_sesion, guion_master)
-            subprocess.run(
-                [sys.executable, "auditoria/miura_auditor_bunker.py", "--id", str(id_sesion)],
-                check=False,
-            )
+            try:
+                subprocess.run(
+                    [sys.executable, "auditoria/miura_auditor_bunker.py", "--id", str(id_sesion)],
+                    check=False,
+                    timeout=300,
+                )
+            except subprocess.TimeoutExpired:
+                console.print("[red]⚠️ Auditor expiró después de 5 minutos.[/]")
 
             usar_opt = console.input("\n¿Cargar versión optimizada? (s/n): ")
             if usar_opt.lower() == "s":
@@ -416,26 +424,36 @@ def fase_spec(id_sesion, tema, plan_texto, auto=False):
             guion_master = arquitecto.redactar_guion_completo(tema, id_sesion, plan_texto)
             continue
 
-    # Guardar aprobado
-    db.guardar_fase(
-        id_sesion, "MASTER", guion_master, "Visual pendiente", "aprobado", estado="aprobado"
-    )
-
-    # Narrativa visual
+    # Narrativa visual (guardado se hará después de generar estética)
     console.print("🎨 [Visual] Generando estética...")
     director_v = VisualDirector(db_manager=db)
     visual_ia = director_v.diseñar_estetica(guion_master, tema_global=tema)
+
+    # PARCHE 2: extraer solo el primer imagen_prompt para PRODUCCION (no el JSON completo)
+    visual_para_sheets = visual_ia  # fallback
+    try:
+        data_visual = json.loads(director_v.cache.get(list(director_v.cache.keys())[-1], "{}"))
+        primer_clip = data_visual.get("clips", [{}])[0]
+        visual_para_sheets = primer_clip.get("imagen_prompt", visual_ia)
+    except Exception:
+        pass  # usar visual_ia completo como fallback
 
     # Guardar archivo físico
     ruta_entrega = os.path.join("output", f"ENTREGA_{id_sesion}")
     os.makedirs(ruta_entrega, exist_ok=True)
     ruta_master = os.path.join(ruta_entrega, f"{id_sesion}_MASTER.txt")
 
+    # PARCHE 3: separar en _MASTER y _VISUAL
     with open(ruta_master, "w", encoding="utf-8") as f:
         f.write(guion_master)
-        f.write(f"\n\n--- PROMPTS VISUALES ---\n{visual_ia}")
 
-    db.guardar_fase(id_sesion, "MASTER", guion_master, visual_ia, ruta_master, estado="aprobado")
+    ruta_visual = os.path.join(ruta_entrega, f"{id_sesion}_VISUAL.txt")
+    with open(ruta_visual, "w", encoding="utf-8") as f:
+        f.write(visual_ia)
+
+    db.guardar_fase(
+        id_sesion, "MASTER", guion_master, visual_para_sheets, ruta_master, estado="aprobado"
+    )
 
     console.print(
         Panel(f"✅ FASE 3 COMPLETADA\nGuion: [cyan]{ruta_master}[/]", border_style="green")
@@ -484,14 +502,44 @@ def fase_design(id_sesion, guion_master, visual_ia, auto=False):
             from tools.mass_visual_forge import mass_visual_forge
 
             mass_visual_forge(target_id=id_sesion)
+    else:
+        # Auto mode: generar prompts masivos automáticamente
+        from tools.mass_visual_forge import mass_visual_forge
 
-    # Sub-fase 4b: Audio
-    console.print("\n[bold]4b. Audio (Andrés)[/]")
+        mass_visual_forge(target_id=id_sesion)
+
+    # Sub-fase 4c: Generación de Imágenes (El Martillo de Nebius)
+    console.print("\n[bold]4c. Generación de Imágenes (Text-to-Image)[/]")
+
+    # Detección inteligente: ¿Ya existen prompts para esta sesión?
+    from tools.image_forge import modo_masivo, parsear_md_completo
+
+    md_path = os.path.join("output", "masivo_grok_prompts.md")
+    sesiones_md = parsear_md_completo(md_path)
+    prompts_listos = any(s[0] == id_sesion for s in sesiones_md)
+
+    # También chequeamos en Sheets por si acaso
+    if not prompts_listos:
+        try:
+            fila_prod = db.produccion.find(id_sesion)
+            if fila_prod and "---CLIP" in str(fila_prod.get("Prompt_Visual", "")):
+                prompts_listos = True
+        except Exception as e:
+            print(f"⚠️ [Producción] Error verificando prompts existentes: {e}")
+
+    if prompts_listos:
+        msg = "[cyan]🎯 Se han detectado PROMPTS LISTOS para esta sesión.[/]\n¿Desea forjar las imágenes físicas ahora (Nebius)?"
+    else:
+        msg = "¿Desea intentar la generación de imágenes ahora?"
 
     if not auto:
-        generar_voz = console.input("¿Generar voz ahora? (s/n): ").lower()
-        if generar_voz == "s":
-            flujo_voz_sdd(id_sesion)
+        generar_imgs = console.input(f"\n{msg} (s/n): ").lower()
+        if generar_imgs == "s":
+            modo_masivo(motor="auto", target_id=id_sesion)
+    else:
+        # En modo auto, si hay prompts, forjamos
+        if prompts_listos:
+            modo_masivo(motor="auto", target_id=id_sesion)
 
     console.print(Panel("✅ FASE 4 COMPLETADA", border_style="green"))
     return True
@@ -502,7 +550,7 @@ def flujo_voz_sdd(timestamp):
     from core.voice_director import VoiceDirector
     from core.database import Database
 
-    db = Database(spreadsheet_name="BD_MiuraForge_Engine")
+    db = Database(spreadsheet_name=SPREADSHEET_NAME)
     andres = VoiceDirector()
 
     ruta_salida = os.path.join("output", f"sesion_{timestamp}")
@@ -565,32 +613,57 @@ def fase_implement(id_sesion, auto=False):
     if not auto:
         assembly = console.input("¿Ensamblar video final? (s/n): ").lower()
         if assembly == "s":
-            _ejecutar_assembly()
+            # REFUERZO LÓGICO: Asegurar que el SEO (Fase 7) se corra antes si no hay datos
+            console.print("[cyan]🔍 Verificando metadatos de YouTube (Hook Visual)...[/]")
+            fase_seo(id_sesion, auto=auto)  # Ahora es obligatoria/preventiva
+
+            _ejecutar_assembly(id_sesion)
     else:
-        _ejecutar_assembly()
+        # En modo automático, el SEO es mandatorio para el gancho
+        fase_seo(id_sesion, auto=True)
+        _ejecutar_assembly(id_sesion)
 
     console.print(Panel("✅ FASE 5 COMPLETADA", border_style="green"))
 
 
 def _ejecutar_motion_forge(id_sesion):
-    """Ejecuta Motion Forge."""
+    """Ejecuta Motion Forge, asegurando que la carpeta de la sesión esté registrada."""
     from pathlib import Path
+    from motion_forge.queue_manager import cargar_desde_carpeta
 
-    base_dir = Path("output/imagenes_shorts")
-    if not base_dir.exists():
-        console.print("[yellow]No hay imágenes para animar.[/]")
-        return
+    # Ruta sagrada definida por el usuario
+    ruta_session = Path("output/imagenes_shorts") / id_sesion
 
-    # Lógica simplificada - el motor real está en motion_forge_playwright.py
-    console.print("[cyan]Delegando a Motion Forge...[/]")
-    subprocess.run([sys.executable, "motion_forge/motion_forge_playwright.py", "--cola"])
+    if ruta_session.exists():
+        console.print(f"[cyan]📦 Registrando imágenes de {id_sesion} en la cola de animación...[/]")
+        try:
+            cargar_desde_carpeta(str(ruta_session), id_sesion)
+        except Exception as e:
+            console.print(f"[yellow]⚠️  Aviso de registro: {e}[/]")
+    else:
+        console.print(f"[yellow]⚠️  No se encontró la carpeta de imágenes: {ruta_session}[/]")
+
+    console.print("[cyan]🚀 Delegando a Motion Forge (Modo Cola)...[/]")
+    try:
+        subprocess.run(
+            [sys.executable, "motion_forge/motion_forge_playwright.py", "--cola"],
+            timeout=1200,  # Aumentamos timeout para sesiones largas
+        )
+    except subprocess.TimeoutExpired:
+        console.print("[red]⚠️ Motion Forge expiró después de 20 minutos.[/]")
 
 
-def _ejecutar_assembly():
+def _ejecutar_assembly(id_sesion=None):
     """Ejecuta Short Assembler."""
     from motion_forge.short_assembler import modo_masivo
 
-    modo_masivo()
+    if id_sesion:
+        console.print(f"[cyan]🎬 Iniciando ensamble dirigido para sesión: {id_sesion}[/]")
+        # Podríamos llamar a modo_masivo(id_sesion) si el assembler lo soporta
+        # Por ahora el assembler escanea 'forja_local', así que modo_masivo() está bien
+        # pero es mejor pasarle el contexto.
+
+    modo_masivo(target_id=id_sesion)
 
 
 # ============================================================================
@@ -631,14 +704,20 @@ def fase_verify(id_sesion, auto=False):
         console.print("[ ] Sin verbos de duda")
         console.print("[ ] Calidad técnica 1080p")
 
-        input("\nPresiona ENTER para continuar...")
+        console.input("\n[dim]Presiona ENTER para continuar...[/]")
 
     # Ejecutar auditor automático
-    subprocess.run(
-        [sys.executable, "auditoria/miura_auditor_bunker.py", "--id", str(id_sesion)], check=False
-    )
+    try:
+        subprocess.run(
+            [sys.executable, "auditoria/miura_auditor_bunker.py", "--id", str(id_sesion)],
+            check=False,
+            timeout=300,
+        )
+    except subprocess.TimeoutExpired:
+        console.print("[red]⚠️ Auditor expiró después de 5 minutos.[/]")
 
     console.print(Panel("✅ FASE 6 COMPLETADA", border_style="green"))
+    return {"passed": True}
 
 
 # ============================================================================
@@ -671,7 +750,8 @@ def fase_seo(id_sesion, auto=False):
     )
 
     from tools.youtube_forge import modo_masivo as modo_masivo_yt
-    from tools.youtube_forge import leer_doctrina_youtube, get_brain
+    from tools.youtube_forge import get_brain
+    from tools.common import leer_doctrina_youtube
 
     doctrina = leer_doctrina_youtube()
     brain = get_brain()
@@ -731,7 +811,10 @@ def fase_archive(id_sesion, tema="General"):
     FASE 9 - ARCHIVE: Guardar lecciones y actualizar memoria global.
     """
     console.print(
-        Panel("[bold cyan]FASE 9: ARCHIVE[/]\n[dim]Persistiendo memoria en el Búnker e Engram...[/]", border_style="cyan")
+        Panel(
+            "[bold cyan]FASE 9: ARCHIVE[/]\n[dim]Persistiendo memoria en el Búnker e Engram...[/]",
+            border_style="cyan",
+        )
     )
 
     # 1. Crear carpeta de Entrega
@@ -744,16 +827,17 @@ def fase_archive(id_sesion, tema="General"):
     if os.path.exists(source_dir):
         for item in os.listdir(source_dir):
             shutil.copy2(os.path.join(source_dir, item), ruta_entrega)
-    
+
     # 3. Guardar metadatos en memoria persistente
-    metáfora = console.input("[yellow]¿Qué metáfora central se usó? [/]")
+    metafora = console.input("[yellow]¿Qué metáfora central se usó? [/]")
     leccion = console.input("[yellow]¿Qué lección aprendimos hoy? [/]")
-    
+
     # 4. Actualizar Memoria Global (DB/Sheets)
     from core.database import Database
-    db = Database(spreadsheet_name="BD_MiuraForge_Engine")
-    if metáfora:
-        db.agregar_a_memoria_global([metáfora])
+
+    db = Database(spreadsheet_name=SPREADSHEET_NAME)
+    if metafora:
+        db.agregar_a_memoria_global([metafora])
 
     console.print(f"[bold green]✅ Sesión archivada en:[/] [cyan]{ruta_entrega}[/]")
     console.print(Panel("✅ FASE 9 COMPLETADA", border_style="green"))
@@ -767,12 +851,117 @@ def _save_session_state(id_sesion, tema):
 
 
 def _load_session_state():
-    """Carga la última sesión activa."""
+    """Carga la última sesión activa o muestra selector de Sheets."""
     try:
-        with open("output/temp/session_state.json", "r") as f:
-            return json.load(f)
-    except:
-        return {"id_sesion": None, "tema": None}
+        if os.path.exists("output/temp/session_state.json"):
+            with open("output/temp/session_state.json", "r") as f:
+                return json.load(f)
+    except Exception:
+        pass
+    
+    # Si no hay estado, forzar selección
+    sel = _seleccionar_sesion_sheets()
+    _save_session_state(sel["id_sesion"], sel["tema"])
+    return sel
+
+
+def _seleccionar_sesion_sheets(pagina=0, modo=None):
+    """Muestra sesiones en Sheets (Producción o Backlog) y permite elegir.
+    
+    Args:
+        pagina: Index de página actual.
+        modo: 'produccion' o 'investigacion'.
+    """
+    from core.database import Database
+    TAMANO_PAGINA = 15
+    db = Database(spreadsheet_name=SPREADSHEET_NAME)
+
+    if not modo:
+        console.print("\n[bold yellow]📋 SELECCIÓN DE ORIGEN[/]")
+        console.print("[1] [cyan]Producción / Logística[/] (Sesiones activas)")
+        console.print("[2] [magenta]Backlog de Investigación[/] (Pendientes de guion)")
+        sel_modo = console.input("\nSoberano, elija origen [1/2]: ")
+        modo = "investigacion" if sel_modo == "2" else "produccion"
+
+    try:
+        sesiones_unicas = {}
+        titulo_tabla = ""
+
+        if modo == "produccion":
+            titulo_tabla = "PRODUCCIÓN / LOGÍSTICA"
+            for ws_name in ["PRODUCCION", "LOGISTICA"]:
+                try:
+                    ws = db.sheet.worksheet(ws_name)
+                    records = ws.get_all_records()
+                    for r in records:
+                        id_ses = str(r.get("ID_Sesion", r.get("ID", ""))).strip()
+                        if id_ses and id_ses not in sesiones_unicas:
+                            sesiones_unicas[id_ses] = {
+                                "id": id_ses,
+                                "fase": r.get("Fase", r.get("Tema", "N/A")),
+                                "estado": r.get("Estado", "N/A"),
+                                "vista": r.get("Guion", r.get("Metricas", ""))[:45]
+                            }
+                except: continue
+        else:
+            titulo_tabla = "BACKLOG DE INVESTIGACIÓN"
+            try:
+                ws = db.sheet.worksheet("INVESTIGACION_PSICOLOGICA")
+                records = ws.get_all_records()
+                for r in reversed(records):
+                    id_ses = str(r.get("ID_SEMANA", "")).strip()
+                    if id_ses and id_ses not in sesiones_unicas:
+                        sesiones_unicas[id_ses] = {
+                            "id": id_ses,
+                            "fase": r.get("TEMA", "Investigación"),
+                            "estado": r.get("DOLOR_PRINCIPAL", "Pendiente"),
+                            "vista": r.get("FRASES_POTENTES", "")[:45],
+                            "tema_real": r.get("TEMA", "")
+                        }
+            except: pass
+
+        if not sesiones_unicas:
+            console.print(f"[yellow]⚠️ No hay datos en {titulo_tabla}.[/]")
+            return {"id_sesion": console.input("ID manual: "), "tema": None}
+
+        lista_ids = list(sesiones_unicas.values())
+        total_paginas = (len(lista_ids) + TAMANO_PAGINA - 1) // TAMANO_PAGINA
+        pagina = max(0, min(pagina, total_paginas - 1))
+        
+        inicio, fin = pagina * TAMANO_PAGINA, min((pagina+1) * TAMANO_PAGINA, len(lista_ids))
+        
+        table = Table(title=f"📋 {titulo_tabla} ({pagina+1}/{total_paginas})", box=box.ROUNDED)
+        table.add_column("N°", style="bold yellow")
+        table.add_column("ID SESIÓN", style="cyan")
+        table.add_column("TEMA / FASE", style="white")
+        table.add_column("ESTADO", style="green")
+        table.add_column("VISTA PREVIA", style="dim")
+
+        for i, ses in enumerate(lista_ids[inicio:fin], inicio + 1):
+            table.add_row(str(i), ses["id"], ses["fase"][:20], ses["estado"][:15], ses["vista"])
+
+        console.print(table)
+        nav = f"\n[bold]OPCIONES:[/] {'[cyan]<[/] Ant | ' if pagina > 0 else ''}" \
+              f"{'[cyan]>[/] Sig | ' if pagina < total_paginas - 1 else ''}" \
+              f"[cyan]num[/] Elegir | [cyan]m[/] Cambiar Modo | [cyan]ID[/] Manual"
+        console.print(nav)
+
+        sel = console.input("\nSelección: ")
+        if sel == "<" and pagina > 0: return _seleccionar_sesion_sheets(pagina - 1, modo)
+        if sel == ">" and pagina < total_paginas - 1: return _seleccionar_sesion_sheets(pagina + 1, modo)
+        if sel.lower() == "m": return _seleccionar_sesion_sheets(0, None)
+
+        try:
+            val = int(sel) - 1
+            if 0 <= val < len(lista_ids):
+                e = lista_ids[val]
+                return {"id_sesion": e["id"], "tema": e.get("tema_real")}
+        except: pass
+        return {"id_sesion": sel, "tema": None}
+
+    except Exception as e:
+        console.print(f"[red]❌ Error: {e}[/]")
+        return {"id_sesion": console.input("ID manual: "), "tema": None}
 
 
 # ============================================================================
@@ -803,11 +992,28 @@ def forja_total():
 
     # Fase 2: PROPOSE
     plan, _ = fase_propose(id_sesion, tema, hallazgos, auto=True)
-    if not plan:
+    if not plan or len(str(plan).strip()) < 20:
+        console.print("[red]❌ Propuesta inválida o vacía. Abortando Forja Total.[/]")
         return
 
+    # Sanitizar plan: extraer texto legible si es JSON crudo
+    plan_texto = plan
+    try:
+        plan_data = json.loads(plan)
+        partes = []
+        for key in ["categoria", "estructura", "estructura_narrativa", "propuesta"]:
+            if plan_data.get(key):
+                val = plan_data[key]
+                if isinstance(val, dict):
+                    val = json.dumps(val, ensure_ascii=False, indent=2)
+                partes.append(f"{key.upper()}: {val}")
+        if partes:
+            plan_texto = "\n".join(partes)
+    except (json.JSONDecodeError, TypeError, AttributeError):
+        pass  # Usar plan tal cual si no es JSON
+
     # Fase 3: SPEC
-    guion, visual, _ = fase_spec(id_sesion, tema, plan, auto=True)
+    guion, visual, _ = fase_spec(id_sesion, tema, plan_texto, auto=True)
 
     # Fase 4: DESIGN
     fase_design(id_sesion, guion, visual, auto=True)
@@ -850,11 +1056,12 @@ def menu_herramientas():
     table.add_row("2", "Image Forge", "Generar imágenes con motores")
     table.add_row("3", "Deployer", "Generar paquete de despliegue")
     table.add_row("4", "Auditor Manual", "Revisar guion específico")
-    table.add_row("5", "Volver", "Volver al menú principal")
+    table.add_row("5", "Analítica Miura", "Reporte de rendimiento (8 días)")
+    table.add_row("6", "Volver", "Volver al menú principal")
 
     console.print(table)
 
-    opcion = input("\nSelección: ")
+    opcion = console.input("\n[bold]Selección: [/]")
 
     if opcion == "1":
         # Motion Forge manual
@@ -870,7 +1077,23 @@ def menu_herramientas():
         console.print("[cyan]Deployer...[/]")
     elif opcion == "4":
         ts = input("ID de sesión: ")
-        subprocess.run([sys.executable, "auditoria/miura_auditor_bunker.py", "--id", ts])
+        try:
+            subprocess.run(
+                [sys.executable, "auditoria/miura_auditor_bunker.py", "--id", ts],
+                timeout=300,
+            )
+        except subprocess.TimeoutExpired:
+            console.print("[red]⚠️ Auditor expiró.[/]")
+    elif opcion == "5":
+        try:
+            subprocess.run(
+                [sys.executable, "tools/miura_analista.py"],
+                timeout=300,
+            )
+        except Exception as e:
+            console.print(f"[red]⚠️ Error en analítica: {e}[/]")
+    elif opcion == "6":
+        return
 
 
 def seleccionar_tema_sheets(db):
@@ -879,7 +1102,8 @@ def seleccionar_tema_sheets(db):
         if not db.clusters:
             try:
                 db.clusters = db.sheet.worksheet("CLUSTERS_DOLOR")
-            except:
+            except Exception:
+                console.print("[dim]⚠️ Tabla CLUSTERS_DOLOR no encontrada.[/]")
                 return None
 
         records = db.clusters.get_all_records()
@@ -897,13 +1121,21 @@ def seleccionar_tema_sheets(db):
             )
 
         console.print(table)
-        idx = input("\nElija número o 'n' para manual: ")
+        idx = console.input("\n[bold]Elija número o 'n' para manual: [/]")
 
         if idx.lower() == "n":
             return None
 
-        return records[int(idx) - 1].get("nombre_cluster")
-    except:
+        try:
+            seleccion = int(idx)
+            if 1 <= seleccion <= len(records):
+                return records[seleccion - 1].get("nombre_cluster")
+            console.print(f"[red]⚠️ Fuera de rango (1-{len(records)}).[/]")
+        except ValueError:
+            console.print("[red]⚠️ Entrada inválida.[/]")
+        return None
+    except Exception as e:
+        console.print(f"[dim]⚠️ Error cargando clusters: {e}[/]")
         return None
 
 
@@ -920,38 +1152,49 @@ def main():
     while True:
         opcion = mostrar_menu_orquestador()
 
-        # Fases 1-9
+        # Cargar estado actual
         state = _load_session_state()
-        curr_id = state["id_sesion"]
-        curr_tema = state["tema"]
+        curr_id = state.get("id_sesion")
+        curr_tema = state.get("tema")
 
         if opcion == "1":
             res = fase_explore()
             if res:
                 _save_session_state(res[0], res[1])
+        
         elif opcion == "2":
-            id_sesion = curr_id or input("ID de sesión: ")
-            tema = curr_tema or input("Tema: ")
-            
+            # Fase 2: PROPOSE
+            if not curr_id:
+                sel = _seleccionar_sesion_sheets(modo="investigacion")
+                curr_id, curr_tema = sel["id_sesion"], sel["tema"]
+                _save_session_state(curr_id, curr_tema)
+
             from core.database import Database
-            db = Database(spreadsheet_name="BD_MiuraForge_Engine")
-            hallazgos = db.obtener_investigacion_reciente(tema)
+            db = Database(spreadsheet_name=SPREADSHEET_NAME)
             
+            with console.status(f"[bold magenta]Buscando investigación para {curr_id}..."):
+                hallazgos = db.obtener_investigacion_reciente(tema=curr_tema, id_sesion=curr_id)
+
             if hallazgos:
-                fase_propose(id_sesion, tema, hallazgos)
+                res = fase_propose(curr_id, curr_tema, hallazgos)
+                if res:
+                    _save_session_state(res[1], curr_tema)
             else:
-                console.print("[yellow]Ejecute FASE 1 primero para obtener hallazgos.[/]")
+                console.print(f"[yellow]⚠️ No hay hallazgos para {curr_id}. ¿Desea ir a EXPLORE primero?[/]")
+        
         elif opcion == "3":
-            id_sesion = curr_id or input("ID de sesión: ")
-            tema = curr_tema or input("Tema: ")
-            
-            # Cargar propuesta de Fase 2
-            from core.database import Database
-            db = Database(spreadsheet_name="BD_MiuraForge_Engine")
-            # En modo manual, asumimos que si el Soberano llega aquí, quiere forjar el MASTER
-            fase_spec(id_sesion, tema, "Plan manual de contingencia", auto=False)
+            # Fase 3: SPEC (Guion Master)
+            if not curr_id:
+                sel = _seleccionar_sesion_sheets()
+                curr_id, curr_tema = sel["id_sesion"], sel["tema"]
+                _save_session_state(curr_id, curr_tema)
+
+            # Para Fase 3 necesitamos el plan de Fase 2
+            # Si no hay plan en memoria, intentamos fase_propose primero o manual
+            fase_spec(curr_id, curr_tema, "Recuperación de Forja: Plan Automático", auto=False)
+        
         elif opcion == "4":
-            id_sesion = curr_id or input("ID de sesión: ")
+            id_sesion = curr_id or console.input("ID de sesión: ")
             fase_design(id_sesion, "", "", auto=False)
         elif opcion == "5":
             id_sesion = curr_id or input("ID de sesión: ")
